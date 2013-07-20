@@ -8,7 +8,7 @@ close all;
 initVARS();            % Certain Variables needed within code
 initDISP();            % Setup figure handles for the GUI
 
-% Testing Code
+% Testing Code Set simulator to this value
 ctheta1 = 103;
 ctheta2 = -63.5;
 
