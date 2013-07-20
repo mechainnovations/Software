@@ -70,5 +70,3 @@ alpha0 = acosd((CurStR^2 - EF^2 - DF^2) / (-2*EF*DF));
 disp(['Alpha : ' num2str(alpha0)]);
 disp(['EF : ' num2str(EF)]);
 disp(['DF : ' num2str(DF)]);
-disp(['...']);
-disp(['tCyle : ' num2str(totTime)]);

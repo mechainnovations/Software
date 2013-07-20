@@ -11,13 +11,13 @@ initDISP();            % Setup figure handles for the GUI
 % Testing Code Set simulator to this value
 ctheta1 = 103;
 ctheta2 = -63.5;
-
+TT = 0;
 
 
 % Main Program Loop
 while 1
     % Timing stuff
-    sTime = cputime;
+    tic;
     
     % Read the current Angle from the Sensors
     % getAngles(  );
@@ -61,7 +61,7 @@ while 1
     displayInfo();
     
     % Paces loop for constant cycle time
-    while (cputime - sTime) < tCycle
+    while toc < tCycle
         ;
     end   
 
