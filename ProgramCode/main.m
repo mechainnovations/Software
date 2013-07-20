@@ -1,5 +1,5 @@
 clc;
-clear;
+clear variables;
 close all;
 
 % Initialisation Functions
@@ -12,9 +12,13 @@ initDISP();            % Setup figure handles for the GUI
 ctheta1 = 103;
 ctheta2 = -63.5;
 
+
+
 % Main Program Loop
 while 1
-
+    % Timing stuff
+    sTime = cputime;
+    
     % Read the current Angle from the Sensors
     % getAngles(  );
 
@@ -41,8 +45,8 @@ while 1
     desExt = [DesBoR, DesStR, 0]; % Desired Ram Extensions
     curExt = [CurBoR, CurStR, 0]; % Current Ram Extensions
     
-    boGains = [ 10 1 1];          % Boom Gains
-    stGains = [ 10 1 1];          % Stick Gains
+    boGains = [ 1000 1000000 1];          % Boom Gains
+    stGains = [ 1000 1000000 1];          % Stick Gains
     buGains = [ 1 1 1];           % Bucket Gains
     
     
@@ -56,9 +60,11 @@ while 1
 	% Display useful information in a GUI and on the Command Window
     displayInfo();
     
-    % Wait to ensure sytem does not run too fast.
-    pause(0.1);    
-    
+    % Paces loop for constant cycle time
+    while (cputime - sTime) < tCycle
+        ;
+    end   
+
     % Testing without Simulator Code Remove in Real Situation
     I_cur = I_des;
     [ctheta1, ctheta2] = calcAnglesFromPosition(I_cur,[0, 0]);

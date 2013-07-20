@@ -9,7 +9,7 @@ function [ boomRam, stickRam, bucketRam ] = getPIDRam( desExt, curExt,...
 
 
 % Calculate the values to send to the ram
-persistent T;                  % Time step
+persistent Td;                  % Time step
 persistent prevBoomErr;        % Previous Boom Extension
 persistent prevStickErr;       % Previous Stick Extension
 persistent prevBucketErr;      % Previous Bucket Extension
@@ -27,7 +27,7 @@ maxBucketValue  = 250;
 
 % Initialisation of the persistent variables (only need to check one)
 if isempty(ramBoom)
-    T                   = 0;
+    Td                  = 0;
     ramBoom             = 0;
     ramStick            = 0;
     ramBucket           = 0;
@@ -56,8 +56,8 @@ Buk_i = bucketGains(3);
 
 
 % PID Control 
-dt = cputime - T; % Delta Time Step
-T  = cputime;
+dt  = cputime - Td; % Delta Time Step
+Td  = cputime;
 
 % Error
 boomError    = (desExt(1) - curExt(1));
@@ -99,9 +99,9 @@ ramBoom   = ramBoom + pBoom + dBoom;
 ramStick  = ramStick + pStick + dStick;
 ramBucket = ramBucket + pBucket + dBucket;
 
-boomRam   = ramBoom;
-stickRam  = ramStick;
-bucketRam = ramBucket;
+boomRam   = round(ramBoom);
+stickRam  = round(ramStick);
+bucketRam = round(ramBucket);
 
 % Need to limit the values to the maximum ram value;
 

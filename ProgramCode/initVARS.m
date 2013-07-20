@@ -24,5 +24,7 @@ boomExt   = 0;
 stickExt  = 0;
 bucketExt = 0;
 
+% Time for one complete cycle
+tCycle = 0.05;
 
 

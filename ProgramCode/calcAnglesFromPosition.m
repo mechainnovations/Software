@@ -48,7 +48,14 @@ if t > 0
     theta1 = atan2d(F(2),F(1)) + alpha2 + alpha1;
     % Theta 2
     theta2 = atan2d(I_des(2) - F(2), I_des(1) - F(1));
-else
+    
+    % Ram Distance Check this allows ensuring the Boom
+    [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
+    DE = norm(tE - tD);
+
+end
+
+if t <= 0 || DE > 3.55 || DE < 2.42
     % Get the intersection point
     F = calcIntersectionPoint( I );
     % Theta 1
@@ -56,7 +63,8 @@ else
     % Theta 2
     theta2 = atan2d(I(2) - F(2), I(1) - F(1));
 end
-    
+
+
 % Limit angles so that they exist within reality
 
 % Boom
@@ -73,8 +81,6 @@ elseif theta2 < -150
     theta2 = -150;
 end
 
-% Ultimate Limit comes from the Rams
-% Not overly sure how to go about coding this section...
 
 
 end

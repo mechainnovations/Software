@@ -16,13 +16,13 @@ t   = 1:1000;
 i = 1;
 
 figure;
-h1 = subplot(1,1,1);
-plot(t,val1,'c'); hold on;
-plot(t,val2,'g');
-plot(t,val3,'b');
-plot(t,val4,'k'); hold off;
+h2 = plot(t,val1,'c'); hold on;
+h3 = plot(t,val2,'g');
+h4 = plot(t,val3,'b');
+h5 = plot(t,val4,'k'); hold off;
 
 while 1
+    
     axes1 = read(joy);
     if abs(axes1(1)) > 0.15
         Dram1 = 100*axes1(1); % Current Ram1
@@ -37,20 +37,17 @@ while 1
     end
     
     
-    [a b c] = getPIDRam([Dram1, Dram2, 0], [Cram1, Cram2, 0],[100,100000,1],...
-        [10,500,1],[1,1,1]);
+    [a b c] = getPIDRam([Dram1, Dram2, 0], [Cram1, Cram2, 0],[10,10000,1],...
+        [10,500000,1],[1,1,1]);
     
-    Cram1 = Cram1 + a/100;
-    Cram2 = Cram2 + b/100;
+    Cram1 = Cram1 + a/75;
+    Cram2 = Cram2 + b/75;
     
     
 
-    clc;
     
-    disp(['Cram1: ' num2str(Cram1)]);
-    disp(['Dram1: ' num2str(Dram1)]);
-    disp(['Cram2: ' num2str(Cram2)]);
-    disp(['Dram2: ' num2str(Dram2)]);
+
+    
     val1(i) = Cram1;
     val2(i) = Cram2;
     val3(i) = Dram1;
@@ -59,14 +56,24 @@ while 1
     if i > 1000
         i = 1;
     end
-    
-    delete(h1);
-    h1 = subplot(1,1,1);
-    plot(t,val1,'c'); hold on;
-    plot(t,val2,'g');
-    plot(t,val3,'b');
-    plot(t,val4,'k'); hold off;
-    legend('Cram1','Cram2','Dram1','Dram2');
+    e = cputime;
+
+    r1 = cputime - e;
+    e = cputime;
+    set(h2,'XData',t,'YData',val1);
+    set(h3,'XData',t,'YData',val2);
+    set(h4,'XData',t,'YData',val3);
+    set(h5,'XData',t,'YData',val4);
     axis([0 1000, -125 125]);
-        drawnow;
+    drawnow;
+    r2 = cputime - e;
+    clc;
+    
+    disp(['Hz1: ' num2str(r1)]);
+    disp(['Hz2: ' num2str(r2)]);
+    disp(['Dram2: ' num2str(Dram2)]);
+    disp(['Cram1: ' num2str(Cram1)]);
+    disp(['Dram1: ' num2str(Dram1)]);
+    disp(['Cram2: ' num2str(Cram2)]);
+
 end
