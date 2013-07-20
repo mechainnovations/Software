@@ -8,10 +8,13 @@ if isempty(prevStep)
     prevStep = zeros(1, 6 );
 end
 
+% New Points
 theta   = 0;
 radius  = 0;
 zheight = 0;
 
+% Value axis must be above to move.
+val = 0.15;
 
 [axes, buttons] = read(joyID); % Read controller inputs
 
@@ -19,14 +22,22 @@ zheight = 0;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
-    tAxis = 1; maxMoveT = 0.5;
-    rAxis = 2; maxMoveR = 0.5;
-    zAxis = 3; maxMoveZ = 0.5;
+    tAxis = 4; maxMoveT = 0.5;
+    rAxis = 1; maxMoveR = 0.5;
+    zAxis = 2; maxMoveZ = -0.5;
 
     % Calculate the New Steps
-    theta   = axes(tAxis) * maxMoveT;
-    radius  = axes(rAxis) * maxMoveR;
-    zheight = axes(zAxis) * maxMoveZ;
+    if abs(axes(tAxis)) > val
+        theta   = axes(tAxis) * maxMoveT;
+    end
+    
+    if abs(axes(rAxis)) > val
+        radius  = axes(rAxis) * maxMoveR;
+    end
+    
+    if abs(axes(zAxis)) > val
+        zheight = axes(zAxis) * maxMoveZ;
+    end
 end
 
 % SpaceMousePro requires a differentiator to find the -1 -> 1 value

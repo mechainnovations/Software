@@ -1,12 +1,13 @@
-function [CB_new, CB, DE_new, DE] = getRamExt ( dTheta, dr, dZ, I)
+function [CB_new, CB, DE_new, DE, vector] = getRamExt ( dTheta, dr, dZ, I)
 % Calculate the needed RAM extensions for the new position
 
 % Current Bucket Position
 [theta1, theta2, I, F, E, D, CB, DE] = Bucket_Position(0, 0, 0, I);
-
+vector = [I',F',E',D',[CB,DE,0]',[theta1, theta2, 0]'];
 % New Bucket Position
 [theta1_new, theta2_new, I_new, F_new, E_new, D_new, CB_new, DE_new]...
     = Bucket_Position(dr, dZ, dTheta, I);
+
 
 % Sanity Check to ensure we can move to the correct location.
 if imag(CB_new) ~= 0

@@ -89,7 +89,7 @@ F_new(1) = F_new(1)-FI*sind(180-EFI+theta_2-FEI);
 F_new(2) = F_new(2)+FI*cosd(180-EFI+theta_2-FEI); 
 
 % New Boom Ram Extension
-V_AB = 45;
+V_AB = 59;
 CAB_new = theta_1 - V_AB;
 CB_new = sqrt(AC^2+AB^2-(2*AC*AB*cosd(CAB_new)));
 
