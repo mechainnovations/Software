@@ -22,9 +22,9 @@ val = 0.15;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
-    tAxis = 4; maxMoveT = 0.5;
-    rAxis = 1; maxMoveR = 0.5;
-    zAxis = 2; maxMoveZ = -0.5;
+    tAxis = 4; maxMoveT = 0.05;
+    rAxis = 2; maxMoveR = 0.05;
+    zAxis = 5; maxMoveZ = -0.05;
 
     % Calculate the New Steps
     if abs(axes(tAxis)) > val

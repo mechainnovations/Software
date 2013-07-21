@@ -95,9 +95,14 @@ prevStickErr   = stickError;
 prevBucketErr  = bucketError;
 
 % Calculate the adddition to the R;
-ramBoom   = ramBoom + pBoom + dBoom;
-ramStick  = ramStick + pStick + dStick;
+% ramBoom   = ramBoom + pBoom + dBoom;
+% ramStick  = ramStick + pStick + dStick;
+% ramBucket = ramBucket + pBucket + dBucket;
+
+ramBoom   = pBoom + dBoom;
+ramStick  = pStick + dStick;
 ramBucket = ramBucket + pBucket + dBucket;
+
 
 boomRam   = round(ramBoom);
 stickRam  = round(ramStick);

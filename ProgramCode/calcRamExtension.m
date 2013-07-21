@@ -1,7 +1,7 @@
-function [ acRam, deRam ] = calcRamExtension( A,C,D,E )
+function [ acRam, deRam ] = calcRamExtension( B,C,D,E )
 % Calculate the Ram extensions
 
-acRam = norm(A-C);
+acRam = norm(B-C);
 deRam = norm(D-E);
 
 

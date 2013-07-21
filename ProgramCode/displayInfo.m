@@ -58,8 +58,8 @@ disp('...');
 disp(['Ram 1 Value: ' num2str(boomRam)]);
 disp(['Ram 2 Value: ' num2str(stickRam)]);
 disp('...');
-disp(['Theta 1: ' num2str(dtheta1)]);
-disp(['Theta 2: ' num2str(dtheta2)]);
+disp(['Theta 1: ' num2str(ctheta1)]);
+disp(['Theta 2: ' num2str(ctheta2)]);
 disp('...');
 disp(['Radius : ' num2str(I_des(1))]);
 disp(['zHeight: ' num2str(I_des(2))]);
@@ -70,3 +70,24 @@ alpha0 = acosd((CurStR^2 - EF^2 - DF^2) / (-2*EF*DF));
 disp(['Alpha : ' num2str(alpha0)]);
 disp(['EF : ' num2str(EF)]);
 disp(['DF : ' num2str(DF)]);
+disp(['...']);
+disp(['dZ : ' num2str(dZ)]);
+disp(['dR : ' num2str(dR)]);
+disp(['...']);
+disp(['DE : ' num2str(norm(D_des-E_des))]);
+
+
+
+
+
+
+
+
+disp(['...']);
+disp(['dtheta1 : ' num2str(dtheta1)]);
+disp(['dtheta2 : ' num2str(dtheta2)]);
+disp(['Inorm   : ' num2str(norm(I_cur-I_des))]);
+
+
+
+

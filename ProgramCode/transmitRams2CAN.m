@@ -46,7 +46,6 @@ message.Data = data;                     % Put the data into the structure
 % Transmit the message on the correct channel.
 
 transmit(canChan,message)
-pause(0.1)
 success = 1;
 end
 

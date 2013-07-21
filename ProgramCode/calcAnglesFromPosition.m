@@ -52,10 +52,11 @@ if t > 0
     % Ram Distance Check this allows ensuring the Boom
     [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
     DE = norm(tE - tD);
+    BC = norm([0.68 -0.408] - tC);
 
 end
 
-if t <= 0 || DE > 3.55 || DE < 2.42
+if t <= 0 
     % Get the intersection point
     F = calcIntersectionPoint( I );
     % Theta 1
@@ -64,22 +65,22 @@ if t <= 0 || DE > 3.55 || DE < 2.42
     theta2 = atan2d(I(2) - F(2), I(1) - F(1));
 end
 
-
+% || DE > 2.8732 || DE < 1.6943 || BC < 1.7682 || BC > 2.5208
 % Limit angles so that they exist within reality
 
-% Boom
-if theta1 > 115
-    theta1 = 115;
-elseif theta1 < -10
-    theta1 = -10;
-end
-
-% Stick
-if theta2 > -5
-    theta2 = -5;
-elseif theta2 < -150
-    theta2 = -150;
-end
+% % Boom
+% if theta1 > 115
+%     theta1 = 115;
+% elseif theta1 < -10
+%     theta1 = -10;
+% end
+% 
+% % Stick
+% if theta2 > -5
+%     theta2 = -5;
+% elseif theta2 < -150
+%     theta2 = -150;
+% end
 
 
 
