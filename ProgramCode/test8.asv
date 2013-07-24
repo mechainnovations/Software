@@ -1,0 +1,55 @@
+% Tetsing the maximum dispalcement
+clear
+clc
+close all
+
+I = 1;
+J = 1;
+
+dthe   = -pi/2:0.1:pi/2;
+drad   = 2.48:0.1:(4.65+2.48);
+
+dx = drad' * sin(dthe);
+dy = drad' * cos(dthe);
+
+[n,m] = size(dx);
+I = 1;
+J = 1;
+while J < n+1
+    while I < m+1
+        [dtheta1, dtheta2]  = calcAnglesFromPosition([dx(J,I),dy(J,I)],[0,0]);
+        [Cd, Dd, Ed, Fd, Id]  = calcPositionFromAngles(dtheta1, dtheta2);
+        BC(J,I) = norm([.68,-.408] - Cd);
+        DE(J,I) = norm(Dd - Ed);
+        I = I + 1;
+    end
+    I = 1;
+    J = J + 1;
+end
+
+
+figure;
+subplot(1,2,1);surf(dx,dy,BC);
+title('BC Ram');
+subplot(1,2,2);surf(dx,dy,DE);
+title('DE Ram');
+
+
+% Find the line path;
+currentX = 4;
+currentY = 3;
+
+desiredX = 4;
+desiredY = -2;
+
+vectA = [ 
+
+
+
+
+
+
+
+
+
+        
