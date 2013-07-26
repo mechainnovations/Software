@@ -1,5 +1,14 @@
 % Display initialisation
 
+
+
+% Figure handle setup
+figure;
+
+
+% PID Ram Tracking Graph
+
+
 % Intial Position Setup
 C_cur = [0, 0];
 D_cur = [0, 0];
@@ -20,22 +29,21 @@ I_des = I_cur;
 % Draw the initial digger to speed up the process
 figure;
 points = bucketLinkagePoints(H_cur,I_cur,J_cur,K_cur);
-h1 = plot(points(:,1),points(:,2),'-ok'); hold on;
+h1 = plot(points(:,1),points(:,2),'-ok');
 
 points = boomPoints(C_cur,D_cur,F_cur);
 h2 = plot(points(:,1),points(:,2),'-ok');
 
 points = stickPoints(E_cur,F_cur,G_cur,H_cur,I_cur);
-h3 = plot(points(:,1),points(:,2),'-ok');
+h3 = plot(points(:,1),points(:,2),'-og');
 
-[a, b, c] = ramPoints(C_cur,D_cur,E_cur,G_cur,J_cur);
-col = '-og';
-h4 = plot(a(:,1),a(:,2),col);
-h5 = plot(b(:,1),b(:,2),col);
-h6 = plot(c(:,1),c(:,2),col);
+[a, b, c] = rampoints(
+h4 = plot(a(:,1),a(:,2),'-ok',b(:,1),b(:,2),'-ok',c(:,1),c(3,2),'-ok');
 
-points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
-h7 = plot(points(:,1),points(:,2),'-r'); hold off;
+points = bucketPoints(H_cur,I_cur,J_cur,K_cur);
+h3 = plot(points(:,1),points(:,2),'-oh');
+
+
 
 axis([-1 8 -5 5]);
 title('Current Digger');

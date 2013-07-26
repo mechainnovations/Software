@@ -2,6 +2,15 @@ clc;
 clear variables;
 close all;
 
+% Tetsing!
+boomAngle = 36;
+stickAngle = -14;
+bucketAngle = -14;
+ctheta1 = boomAngle + 7.9124 + 29.2404;
+ctheta2 = stickAngle;
+ctheta3 = bucketAngle;
+
+
 % Initialisation Functions
 %initCAN();           % CAN Initilisation
 [joyID] = initJOY();   % Joystick Initilisation
@@ -13,9 +22,7 @@ initDISP();            % Setup figure handles for the GUI
 % ctheta2 = -63.5;
 TT = 0;
 
-boomAngle = 36;
-stickAngle = -14;
-bucketAngle = -14;
+
 % Main Program Loop
 while 1
     % Timing stuff
