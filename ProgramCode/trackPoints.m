@@ -1,15 +1,19 @@
-function [points] = bucketPoints (theta3, I0 )
+function [points] = trackPoints ( I0 )
 
 % Angles for the Bucket
 alpha(1) = 80;
 alpha(2) = 90;
 alpha(3) = 128.7;
+alpha(4) = 128.7;
+alpha(5) = 128.7;
+alpha(6) = 128.7;
+alpha(7) = 128.7;
 
 
 % Lengths for the bucket
-length(1) = 0.4;
-length(2) = 0.5;
-length(3) = 0.64;
+length(1) = 0.8;
+length(2) = 1.0;
+length(3) = 1.28;
 
 % Iterate through to get all of the points
 points(1,:) = I0;  % Intial Point = 0
