@@ -6,11 +6,9 @@ close all;
 boomAngle = 36;
 stickAngle = -14;
 bucketAngle = -14;
-slewAngle = 0;
 ctheta1 = boomAngle + 7.9124 + 29.2404;
 ctheta2 = stickAngle;
 ctheta3 = bucketAngle;
-ctheta4 = slewAngle;
 
 
 % Initialisation Functions
@@ -29,17 +27,15 @@ TT = 0;
 while 1
     % Timing stuff
     tic;
-    [a b c d] = getMove(joyID,'xbox');
+    [a b c] = getMove(joyID,'xbox');
     % Read the current Angle from the Sensors
     boomAngle = a+boomAngle;
     stickAngle = b+stickAngle;
     bucketAngle = c+bucketAngle;
-    slewAngle = d+slewAngle;
     T1 = toc; tic;
     ctheta1 = boomAngle + 7.9124 + 29.2404;
     ctheta2 = stickAngle;
     ctheta3 = bucketAngle;
-    ctheta4 = slewAngle;
     
 
     
