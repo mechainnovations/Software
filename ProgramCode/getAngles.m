@@ -1,4 +1,4 @@
-% Reading from the CAN Channel to MATALAB
+% Reading from the CAN Channel to MATLAB
 msg = receive(canChan,Inf);
 
 % CAN identifiers for each of the angle sensors 

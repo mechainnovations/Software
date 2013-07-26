@@ -1,4 +1,4 @@
 % Initial bucket position setup
 
-[boomAngle, stickAngle, bucketAngle] = getAngles();
+[boomAngle, stickAngle, bucketAngle, slewAngle] = getAngles();
 I = Calc_PositionI(boomAngle, stickAngle);

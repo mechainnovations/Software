@@ -8,11 +8,13 @@ stickAngle  = 0;
 % global bucketAngle;
 bucketAngle = 0;
 rotAngle    = 0;
+% Global Slew Angle
 
 % Displacements
 dTheta  = 0;
 dRadius = 0;
 dZ      = 0;
+slew = 0;
 I       = [0, 0, 0];
 
 % Positions

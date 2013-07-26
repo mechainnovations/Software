@@ -22,7 +22,7 @@ switch ramID
         id = '0cfe3210';
     case 'bucket'
         id = '0cfe3310';
-    case 'rot'
+    case 'slew'
         id = '0cfe3410';
 end
 

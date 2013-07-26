@@ -33,6 +33,8 @@ DEPath2 = BCPath2;
 getAngles(  );
 ctheta1 = boomAngle + 7.9124 + 29.2404;
 ctheta2 = stickAngle;
+ctheta3 = bucketAngle;
+ctheta4 = slewAngle;
 
 [C_cur,D_cur,E_cur,F_cur,I_cur] = calcPositionFromAngles(ctheta1,ctheta2);
 I_des = I_cur;
@@ -126,7 +128,7 @@ while 1
     
     JJ = JJ + 1;
     
-    updateRams(canChan,-boomRam,stickRam,0);
+    updateRams(canChan,-boomRam,stickRam,0, slewRam);
     
     % Display useful information in a GUI and on the Command Window
     displayInfo();

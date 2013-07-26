@@ -1,4 +1,4 @@
-function [ theta, radius, zheight ] = getMove( joyID, type )
+function [ theta, radius, zheight, slew ] = getMove( joyID, type )
 % Calculate the step change due to joystick
 persistent prevStep; % Differentiator for mouse pro
 dt = 0.01;
@@ -12,6 +12,7 @@ end
 theta   = 0;
 radius  = 0;
 zheight = 0;
+slew = 0;
 
 % Value axis must be above to move.
 val = 0.15;
@@ -25,6 +26,7 @@ if strcmp(type,'xbox')
     tAxis = 4; maxMoveT = 0.5;
     rAxis = 2; maxMoveR = 1;
     zAxis = 5; maxMoveZ = -1;
+    slewAxis = 3; maxMoveSlew = 250;
 
     % Calculate the New Steps
     if abs(axes(tAxis)) > val
@@ -37,6 +39,10 @@ if strcmp(type,'xbox')
     
     if abs(axes(zAxis)) > val
         zheight = axes(zAxis) * maxMoveZ;
+    end
+    
+    if abs(axes(slewAxis)) > val
+        slew = axes(slewAxis) * maxMoveSlew;
     end
 end
 
