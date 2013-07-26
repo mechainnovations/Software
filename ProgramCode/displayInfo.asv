@@ -49,15 +49,13 @@
 % title('Desired Digger');
 
 x = 1:N;
-x2 = 1:maxJJ;
+x2 = 1:25;
 subplot(1,2,1);
 set(h1,'XData',x,'YData',BCPath);
 set(h2,'XData',x,'YData',DEPath);
 set(h3,'XData',x2,'YData',BCPath2);
 set(h4,'XData',x2,'YData',DEPath2);
-
-
-axis([0 N min(BCPath)-.1 max(DEPath)+.1]);
+axis([0 100 2 3.7]);
 title('Ram Curves');
 subplot(1,2,2);
 minX = min(xVector)-.1;
@@ -66,7 +64,7 @@ maxX = max(xVector)+.1;
 maxY = max(yVector)+.1;
 
 set(h5,'XData',xVector,'YData',yVector);
-axis([minX maxX minY maxY]);
+axis([minX minY-0.1 maxX-0.1 maxY+.01]);
 drawnow;
 
 clc;

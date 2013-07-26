@@ -15,15 +15,13 @@ TT = 0;
 
 JJ = 1;
 
+N = 50;                 % 
+frequency = 4;          % [Hz]
+maxJJ = round(N/4);
 
-T = 0.5;                      % Seconds to move between points
-N = round(T/tCycle);          % Number of steps between A and B
-frequency = 1;                % Frequency to accept input [Hz]
-maxJJ = round(N/frequency);   % Index at which to up date the predicted path.
-
-updateRams(canChan,0,0,0);    % Turn the Rams off
-BCPath = zeros(1,N);          % Initialise path 1
-DEPath = BCPath;              % Initialise path 2
+updateRams(canChan,0,0,0);
+BCPath = zeros(1,N);
+DEPath = BCPath;
 
 BCPath2 = zeros(1,maxJJ);
 DEPath2 = BCPath2;
@@ -122,7 +120,7 @@ while 1
     DEPath2(JJ) = curPointDE;
     
     [boomRam, stickRam, bucketRam] = getPIDRam([setPointBC,setPointDE,0],...
-        [curPointBC,curPointDE,0],[5000 1000 0],[5000 1000 0],[0 0 0]);
+        [curPointBC,curPointDE,0],[5000 0 0],[5000 0 0],[0 0 0]);
     
     JJ = JJ + 1;
     

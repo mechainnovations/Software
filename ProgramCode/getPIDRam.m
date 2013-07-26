@@ -99,13 +99,13 @@ prevBucketErr  = bucketError;
 % ramStick  = ramStick + pStick + dStick;
 % ramBucket = ramBucket + pBucket + dBucket;
 
-ramBoom   = pBoom + dBoom;
-ramStick  = pStick + dStick;
-ramBucket = ramBucket + pBucket + dBucket;
+ramBoom   = pBoom - dBoom + iBoom;
+ramStick  = pStick - dStick + iStick;
+ramBucket = ramBucket + pBucket - dBucket;
 
 
-boomRam   = round(ramBoom);
-stickRam  = round(ramStick);
+boomRam   = ramBoom; %round(ramBoom);
+stickRam  = ramStick; %round(ramStick);
 bucketRam = round(ramBucket);
 
 % Need to limit the values to the maximum ram value;
