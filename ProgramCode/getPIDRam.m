@@ -121,17 +121,19 @@ prevBucketErr  = bucketError;
 % ramBoom   = ramBoom + pBoom + dBoom;
 % ramStick  = ramStick + pStick + dStick;
 % ramBucket = ramBucket + pBucket + dBucket;
-
-ramBoom   = pBoom - dBoom + iBoom;
-ramStick  = pStick - dStick + iStick;
-ramBucket = pBucket - dBucket;
-
 if nan(1/dt)
     dt = 0.0001;
 end
 
-boomRam   = ramBoom/dt; %round(ramBoom);
-stickRam  = ramStick/dt; %round(ramStick);
+
+ramBoom   = pBoom - dBoom*dt + iBoom/dt;
+ramStick  = pStick - dStick*dt + iStick/dt;
+ramBucket = pBucket - dBucket;
+
+
+
+boomRam   = ramBoom; %round(ramBoom);
+stickRam  = ramStick; %round(ramStick);
 bucketRam = round(ramBucket);
 
 
