@@ -35,6 +35,8 @@ set(h6,'XData',c(:,1),'YData',c(:,2));
 points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
 set(h7,'XData',points(:,1),'YData',points(:,2));
 
+% Plot the point to be found
+set(h8,'XData',find_pt(1),'YData',find_pt(2));
 
 axis([-1 8 -5 5]);
 title('Current Digger');
