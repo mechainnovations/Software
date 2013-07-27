@@ -39,3 +39,5 @@ h7 = plot(points(:,1),points(:,2),'-r'); hold off;
 
 axis([-1 8 -5 5]);
 title('Current Digger');
+
+h8 = plot(0,0, 'xm', 'MarkerSize', 12);
