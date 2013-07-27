@@ -126,15 +126,14 @@ ramBoom   = pBoom - dBoom + iBoom;
 ramStick  = pStick - dStick + iStick;
 ramBucket = pBucket - dBucket;
 
-if nan(1/dt)
-    dt = 0.0001;
-end
 
 boomRam   = ramBoom/dt; %round(ramBoom);
 stickRam  = ramStick/dt; %round(ramStick);
 bucketRam = round(ramBucket);
 
-
+if boomRam == NaN
+    boomRam = 0;
+end
 
 
 

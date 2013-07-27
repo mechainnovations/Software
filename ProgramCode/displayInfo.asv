@@ -49,50 +49,62 @@
 % title('Desired Digger');
 
 x = 1:N;
-x2 = 1:25;
-subplot(1,2,1);
-set(h1,'XData',x,'YData',BCPath);
-set(h2,'XData',x,'YData',DEPath);
-set(h3,'XData',x2,'YData',BCPath2);
-set(h4,'XData',x2,'YData',DEPath2);
-axis([0 100 2 3.7]);
-title('Ram Curves');
-subplot(1,2,2);
-minX = min(xVector)-.1;
-minY = min(yVector)-.1;
-maxX = max(xVector)+.1;
-maxY = max(yVector)+.1;
+x2 = 1:maxJJ;
+% subplot(1,4,1);
+% set(h1,'XData',x,'YData',BCPath);
+% set(h2,'XData',x,'YData',DEPath);
+% set(h3,'XData',x2,'YData',BCPath2);
+% set(h4,'XData',x2,'YData',DEPath2);
 
-set(h5,'XData',xVector,'YData',yVector);
-axis([minX minY-0.1 maxX-0.1 maxY+.01]);
-drawnow;
 
+
+% axis([0 N min(BCPath)-.1 max(DEPath)+.1]);
+% title('Ram Curves');
+% subplot(1,4,2);
+% minX = min(xVector)-.1;
+% minY = min(yVector)-.1;
+% maxX = max(xVector)+.1;
+% maxY = max(yVector)+.1;
+% 
+% set(h5,'XData',xVector,'YData',yVector);
+% axis([minX maxX minY maxY]);
+
+
+subplot(1,2,1)
+set(h6,'XData',x3,{'YData'},{boomK;stickK;bucketK;slewK});
+axis([0 500 -150 150]);
+
+subplot(1,2,2)
+set(h7,'XData',x3,{'YData'},{setPointBC1;setPointDE1;curPointBC1;setPointDE1});
+axis([0 500 2 3.5]);
 clc;
 drawnow;
-disp(['Ram Current 1: ' num2str(curPointBC)]);
-disp(['Ram Current 2: ' num2str(curPointDE)]);
-disp(['Ram Desired 1: ' num2str(setPointBC)]);
-disp(['Ram Desired 2: ' num2str(setPointDE)]);
-disp('...');
-disp(['Ram 1 Value: ' num2str(boomRam)]);
-disp(['Ram 2 Value: ' num2str(stickRam)]);
-disp('...');
-disp(['Theta 1: ' num2str(ctheta1)]);
-disp(['Theta 2: ' num2str(ctheta2)]);
-disp('...');
-disp(['Radius : ' num2str(I_des(1))]);
-disp(['zHeight: ' num2str(I_des(2))]);
-disp('...');
-EF = norm(E_cur - F_cur);
-DF = norm(D_cur - F_cur);
+% disp(['Ram Current 1: ' num2str(curPointBC)]);
+% disp(['Ram Current 2: ' num2str(curPointDE)]);
+% disp(['Ram Desired 1: ' num2str(setPointBC)]);
+% disp(['Ram Desired 2: ' num2str(setPointDE)]);
+% disp('...');
+% disp(['Ram 1 Value: ' num2str(boomRam)]);
+% disp(['Ram 2 Value: ' num2str(stickRam)]);
+% disp('...');
+% disp(['Theta 1: ' num2str(ctheta1)]);
+% disp(['Theta 2: ' num2str(ctheta2)]);
+% disp('...');
+% disp(['Radius : ' num2str(I_des(1))]);
+% disp(['zHeight: ' num2str(I_des(2))]);
+% disp('...');
+% EF = norm(E_cur - F_cur);
+% DF = norm(D_cur - F_cur);
+% 
+% disp(['EF : ' num2str(EF)]);
+% disp(['DF : ' num2str(DF)]);
+% disp(['...']);
+% disp(['dZ : ' num2str(dz)]);
+% disp(['dR : ' num2str(dr)]);
+% disp(['...']);
+% disp(['DE : ' num2str(norm(D_des-E_des))]);
+disp(['Hz : ' num2str(1/TT)]);
 
-disp(['EF : ' num2str(EF)]);
-disp(['DF : ' num2str(DF)]);
-disp(['...']);
-disp(['dZ : ' num2str(dz)]);
-disp(['dR : ' num2str(dr)]);
-disp(['...']);
-disp(['DE : ' num2str(norm(D_des-E_des))]);
 
 
 

@@ -49,10 +49,10 @@ if t > 0
     % Theta 2
     theta2 = atan2d(I_des(2) - F(2), I_des(1) - F(1));
     
-    % Ram Distance Check this allows ensuring the Boom
-    [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
-    DE = norm(tE - tD);
-    BC = norm([0.68 -0.408] - tC);
+%     % Ram Distance Check this allows ensuring the Boom
+%     [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
+%     DE = norm(tE - tD);
+%     BC = norm([0.68 -0.408] - tC);
 
 end
 
