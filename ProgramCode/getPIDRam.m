@@ -16,8 +16,8 @@ persistent prevBucketErr;      % Previous Bucket Extension
 persistent integralBoomError;  % Integral error accumulator
 persistent integralStickError; % Integral error accumulator
 persistent integralBucketError;% Integral error accumulator
-persistent ramBoom;            % Ram value for the Boom
-persistent ramStick;           % Ram value for the Stick
+% persistent ramBoom;            % Ram value for the Boom
+% persistent ramStick;           % Ram value for the Stick
 persistent ramBucket;          % Ram value for the Stick
 
 % Max/Min values for the rams
@@ -26,7 +26,7 @@ maxStickValue   = 250;
 maxBucketValue  = 250;
 
 % Initialisation of the persistent variables (only need to check one)
-if isempty(ramBoom)
+if isempty(Td)
     Td                  = 0;
     ramBoom             = 0;
     ramStick            = 0;
@@ -121,7 +121,7 @@ prevBucketErr  = bucketError;
 % ramBoom   = ramBoom + pBoom + dBoom;
 % ramStick  = ramStick + pStick + dStick;
 % ramBucket = ramBucket + pBucket + dBucket;
-if nan(1/dt)
+if dt < 0.0001
     dt = 0.0001;
 end
 
