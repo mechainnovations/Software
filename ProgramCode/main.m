@@ -39,19 +39,29 @@ ctheta4 = slewAngle;
     calcPositionFromAngles(ctheta1,ctheta2,ctheta3);
 I_des = I_cur + [-1 0];
 
+% Generate the surface to be used. Takes some time!
+dthe   = -pi/2:0.2:pi/2;
+drad   = 2.48:0.2:(4.65+2.48);
 
-% Set of all points to pass through between start and end.
-matrix = [ linspace(I_cur(1),I_des(1),N)', linspace(I_cur(2),I_des(2),N)'];
+dx = drad' * sin(dthe);
+dy = drad' * cos(dthe);
 
-% Iterate to get the two tpaths
-II = 1;
-while II < N+1
-    [dtheta1, dtheta2]  = calcAnglesFromPosition([matrix(II,1),matrix(II,2)],[0,0]);
-    [Cd, Dd, Ed, Fd, Id, Hd, Gd, Jd, Kd, Ld]  = calcPositionFromAngles(dtheta1, dtheta2, ctheta3);
-    BCPath(II) = norm([.68,-.408] - Cd);
-    DEPath(II) = norm(Dd - Ed);
-    II = II + 1;
+[n,m] = size(dx);
+I = 1;
+J = 1;
+while J < n+1
+    while I < m+1
+        [dtheta1, dtheta2]  = calcAnglesFromPosition([dy(J,I),dx(J,I)],[0,0]);
+        [Cd, Dd, Ed, Fd, Id]  = calcPositionFromAngles(dtheta1, dtheta2, 0);
+        BC(J,I) = norm([.68,-.408] - Cd);
+        DE(J,I) = norm(Dd - Ed);
+        I = I + 1;
+    end
+    I = 1;
+    J = J + 1;
 end
+
+% Find the point of the desired location
 
 x3 = 1:500;
 xVector = I_cur(1)*ones(1,length(x3));
@@ -119,16 +129,26 @@ while 1
         
         BCPath2 = zeros(1,maxJJ);
         DEPath2 = zeros(1,maxJJ);
-        
         % Iterate to get the two tpaths
         II = 1;
         while II < N+1
-            [dtheta1, dtheta2]  = calcAnglesFromPosition([matrix(II,1),matrix(II,2)],[0,0]);
-            [Cd, Dd, Ed, Fd, Id, Hd, Gd, Jd, Kd, Ld]  = calcPositionFromAngles(dtheta1, dtheta2, ctheta3);
-            BCPath(II) = norm([.68,-.408] - Cd);
-            DEPath(II) = norm(Dd - Ed);
+            tmp1 = abs(dy - matrix(II,1));
+            tmp2 = abs(dx - matrix(II,2));
+            
+            Atmp = sqrt((tmp1.^2+tmp2.^2));
+            
+            [value, index] = min(Atmp(:));
+            [i,j] = ind2sub(size(Atmp),index);
+            
+            % Get the Height value
+            BCPath(II) = BC(i,j);
+            DEPath(II) = DE(i,j);
+            
             II = II + 1;
         end
+        
+        BCPath = smooth(BCPath,115,'moving');
+        DEPath = smooth(DEPath,115,'moving');
     end
     
     
