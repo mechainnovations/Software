@@ -18,7 +18,7 @@ J = 1;
 while J < n+1
     while I < m+1
         [dtheta1, dtheta2]  = calcAnglesFromPosition([dx(J,I),dy(J,I)],[0,0]);
-        [Cd, Dd, Ed, Fd, Id]  = calcPositionFromAngles(dtheta1, dtheta2);
+        [Cd, Dd, Ed, Fd, Id]  = calcPositionFromAngles(dtheta1, dtheta2, 0);
         BC(J,I) = norm([.68,-.408] - Cd);
         DE(J,I) = norm(Dd - Ed);
         I = I + 1;
