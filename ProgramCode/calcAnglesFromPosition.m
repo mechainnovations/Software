@@ -59,10 +59,16 @@ end
 if t <= 0 
     % Get the intersection point
     F = calcIntersectionPoint( I );
-    % Theta 1
-    theta1 = atan2d(F(2),F(1)) + alpha2 + alpha1;
-    % Theta 2
-    theta2 = atan2d(I(2) - F(2), I(1) - F(1));
+    
+    if imag(F) == 0
+        % Theta 1
+        theta1 = atan2d(F(2),F(1)) + alpha2 + alpha1;
+        % Theta 2
+        theta2 = atan2d(I(2) - F(2), I(1) - F(1));
+    else
+        theta1 = NaN;
+        theta2 = NaN;
+    end
 end
 
 % || DE > 2.8732 || DE < 1.6943 || BC < 1.7682 || BC > 2.5208
