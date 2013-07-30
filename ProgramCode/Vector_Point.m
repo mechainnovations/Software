@@ -36,33 +36,34 @@ Len_ac1 = Calc_Len(a1,c1,1);
 Len_ac2 = Calc_Len(a2,c2,2);
 Len_cf1 = Calc_Len(c1,f1,1);
 Len_cf2 = Calc_Len(c2,f2,2);
-Len_af1 = Calc_Len(a1,f1,1)
-Len_af2 = Calc_Len(a2,f2,2)
+Len_af1 = Calc_Len(a1,f1,1);
+Len_af2 = Calc_Len(a2,f2,2);
 Len_ae1 = Calc_Len(a1,e1,1);
-Len_fi1 = Calc_Len(f1,i1,1)
-Len_fi2 = Calc_Len(f2,i2,2)
-Len_ef1 = Calc_Len(e1,f1,1)
-Len_ef2 = Calc_Len(e2,f2,2)
+Len_fi1 = Calc_Len(f1,i1,1);
+Len_fi2 = Calc_Len(f2,i2,2);
+Len_ef1 = Calc_Len(e1,f1,1);
+Len_ef2 = Calc_Len(e2,f2,2);
 Len_ad1 = Calc_Len(a1,d1,1);
 Len_ad2 = Calc_Len(a2,d2,2);
 Len_ab1 = Calc_Len(a1,b1,1);
 Len_ab2 = Calc_Len(a2,b2,2);
 Len_ai1 = Calc_Len(a1,i1,1)
+Len_ai2 = Calc_Len(a2,i2,2)
 
 % Ram Extensions 
 Len_bc1 = Calc_Len(b1,c1,1);
 Len_bc2 = Calc_Len(b2,c2,2);
-Ram_Ex_bc = Len_bc2-Len_bc1+0.150
+Ram_Ex_bc = Len_bc2-Len_bc1+0.150;
 
-Len_de1 = Calc_Len(d1,e1,1)
+Len_de1 = Calc_Len(d1,e1,1);
 Len_de2 = Calc_Len(d2,e2,2);
-Ram_Ex_de = Len_de2-Len_de1
+Ram_Ex_de = Len_de2-Len_de1;
 
 Len_gj1 = Calc_Len(g1,j1,1);
 Len_gj2 = Calc_Len(g2,j2,2);
 Ram_Ex_gj = Len_gj2-Len_gj1;
 
 % Ram Angle
-Angle = acosd((Len_af1^2-Len_ac1^2-Len_cf1^2)/(-2*Len_ac1*Len_cf1))
+Angle = acosd((Len_af1^2-Len_ac1^2-Len_cf1^2)/(-2*Len_ac1*Len_cf1));
 
 

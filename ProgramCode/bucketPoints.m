@@ -5,6 +5,7 @@ alpha(1) = 80;
 alpha(2) = 90;
 alpha(3) = 128.7;
 
+theta3 = theta3 + 38.7;
 
 % Lengths for the bucket
 length(1) = 0.8;

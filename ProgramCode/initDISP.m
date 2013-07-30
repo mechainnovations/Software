@@ -34,10 +34,21 @@ h4 = plot(a(:,1),a(:,2),col);
 h5 = plot(b(:,1),b(:,2),col);
 h6 = plot(c(:,1),c(:,2),col);
 
+% Point to be found
+h8 = plot(0,0, 'xk', 'MarkerSize', 10, 'Linewidth', 3);
+
+% Flagging lights
+h9 = plot(0.5, 7.5, '.r', 'MarkerSize', 25);
+h10 = plot(3.5, 7.5, '.y', 'MarkerSize', 25);
+h11 = plot(7.5, 7.5, '.g', 'MarkerSize', 25);
+
+%Set ctheta3 to zero
+ctheta3 = 0;
+
 points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
 h7 = plot(points(:,1),points(:,2),'-r'); hold off;
 
 axis([-1 8 -5 5]);
 title('Current Digger');
 
-h8 = plot(0,0, 'xm', 'MarkerSize', 12);
+

@@ -38,16 +38,16 @@ alpha4  = acosd((IG^2 - FG^2 - FI^2)/(-2 * FI * FG));
 % Calculate All needed Points
 
 % C Point
-C(1) = AC*cosd(theta1 - alpha1);
-C(2) = AC*sind(theta1 - alpha1);
+C(1) = AC*cosd(theta1);
+C(2) = AC*sind(theta1);
 
 % D Point
-D(1) = AD*cosd(theta1);
-D(2) = AD*sind(theta1);
+D(1) = AD*cosd(theta1-alpha1);
+D(2) = AD*sind(theta1-alpha1);
 
 % F Point
-F(1) = AF*cosd(theta1 - alpha2 - alpha1);
-F(2) = AF*sind(theta1 - alpha2 - alpha1);
+F(1) = AF*cosd(theta1 - alpha2);
+F(2) = AF*sind(theta1 - alpha2);
 
 % E Point
 E(1) = F(1) + FE*cosd(alpha3 + theta2);

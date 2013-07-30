@@ -38,7 +38,25 @@ set(h7,'XData',points(:,1),'YData',points(:,2));
 % Plot the point to be found
 set(h8,'XData',find_pt(1),'YData',find_pt(2));
 
-axis([-1 8 -5 5]);
+if flag_b == 1
+    set(h9,'XData', -0.5, 'YData', 7.5);
+else
+    set(h9,'XData', 9, 'YData', 9);
+end
+
+if flag_s == 1
+    set(h10,'XData', 3.5, 'YData', 7.5);
+else
+    set(h10,'XData', 9, 'YData', 9);
+end
+
+if flag_bk == 1
+    set(h11,'XData', 7.5, 'YData', 7.5);
+else
+    set(h11,'XData', 9, 'YData', 9);
+end
+
+axis([-1 8 -5 8]);
 title('Current Digger');
 
 

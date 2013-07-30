@@ -45,14 +45,14 @@ if t > 0
     % Get the intersection point
     F = calcIntersectionPoint( I_des );
     % Theta 1
-    theta1 = atan2d(F(2),F(1)) + alpha2 + alpha1;
+    theta1 = atan2d(F(2),F(1)) + alpha2;
     % Theta 2
     theta2 = atan2d(I_des(2) - F(2), I_des(1) - F(1));
     
     % Ram Distance Check this allows ensuring the Boom
-    [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
-    DE = norm(tE - tD);
-    BC = norm([0.68 -0.408] - tC);
+%     [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
+%     DE = norm(tE - tD);
+%     BC = norm([0.68 -0.408] - tC);
 
 end
 
