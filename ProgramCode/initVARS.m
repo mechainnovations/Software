@@ -29,4 +29,9 @@ bucketExt = 0;
 % Time for one complete cycle
 tCycle = 0.001;
 
+% Ram velocities
+boomRam   = 0;
+stickRam  = 0;
+bucketRam = 0;
+
 

@@ -1,5 +1,5 @@
 function [ boomRam, stickRam, bucketRam ] = getPIDRam( desExt, curExt,...
-    boomGains, stickGains, bucketGains )
+    boomGains, stickGains, bucketGains, RESET )
 % Inputs
 % desExt = 3x1 vector containing the desired extensions for the 3 Rams
 % desExt = 3x1 vector containing the current extensions for the 3 Rams
@@ -21,13 +21,13 @@ persistent integralBucketError;% Integral error accumulator
 persistent ramBucket;          % Ram value for the Stick
 
 % Max/Min values for the rams
-maxBoomValue    = 250;
+maxBoomValue    = 220;
 maxStickValue   = 250;
 maxBucketValue  = 250;
 
 % Initialisation of the persistent variables (only need to check one)
-if isempty(Td)
-    Td                  = 0;
+if isempty(Td) || RESET == 1
+    Td                  = cputime;
     ramBoom             = 0;
     ramStick            = 0;
     ramBucket           = 0;
@@ -69,24 +69,24 @@ integralStickError  = integralStickError + stickError;
 integralBucketError = integralBucketError + bucketError;
 
 % Limit the Integral Error
-intErrMax = 0.20;   % [m]
+intErrMax = 1;   % [m]
 
 if integralBoomError > intErrMax
-    integralBoomError = 0.20;
+    integralBoomError = intErrMax;
 elseif integralBoomError < -intErrMax
-    integralBoomError = -0.20;
+    integralBoomError = -intErrMax;
 end
 
 if integralStickError > intErrMax
-    integralStickError = 0.20;
+    integralStickError = intErrMax;
 elseif integralStickError < -intErrMax
-    integralStickError = -0.20;
+    integralStickError = -intErrMax;
 end
 
 if integralBucketError > intErrMax
-    integralBucketError = 0.20;
+    integralBucketError = intErrMax;
 elseif integralBucketError < -intErrMax
-    integralBucketError = -0.20;
+    integralBucketError = -intErrMax;
 end
 
 
@@ -121,20 +121,22 @@ prevBucketErr  = bucketError;
 % ramBoom   = ramBoom + pBoom + dBoom;
 % ramStick  = ramStick + pStick + dStick;
 % ramBucket = ramBucket + pBucket + dBucket;
-if dt < 0.0001
-    dt = 0.0001;
+if dt < 0.01
+    dt = 0.01;
 end
 
 
-ramBoom   = pBoom - dBoom*dt + iBoom/dt;
-ramStick  = pStick - dStick*dt + iStick/dt;
+ramBoom   = pBoom - dBoom*dt + iBoom*dt;
+ramBoom   = ramBoom + (sign(ramBoom) * 160 );
+ramStick  = pStick - dStick*dt + iStick*dt;% + iStick/dt;
+ramStick  = ramStick + (sign(ramStick) * 180 );
 ramBucket = pBucket - dBucket;
 
 
 
 boomRam   = ramBoom; %round(ramBoom);
 stickRam  = ramStick; %round(ramStick);
-bucketRam = round(ramBucket);
+bucketRam = round(pBucket - dBucket);
 
 
 

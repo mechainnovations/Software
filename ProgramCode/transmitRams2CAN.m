@@ -19,11 +19,11 @@ switch ramID
     case 'boom'
         id = '0CFE3110';
     case 'stick'
-        id = '0cfe3210';
-    case 'bucket'
         id = '0cfe3310';
-    case 'slew'
+    case 'bucket'
         id = '0cfe3410';
+    case 'slew'
+        id = '0cfe3610';
 end
 
 % 8-byte data string

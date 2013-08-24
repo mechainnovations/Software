@@ -48,12 +48,12 @@ while 1
     
 
     JJ = JJ+1;
-    if JJ > 30
-        JJ = 0;
-        Cram1 = Cram1 + 10;
-        Cram2 = Cram2 + 10;
-        pause(0.2)
-    end
+%     if JJ > 30
+%         JJ = 0;
+%         Cram1 = Cram1 + 10;
+%         Cram2 = Cram2 + 10;
+%         pause(0.2)
+%     end
     val1(i) = Cram1;
     val2(i) = Cram2;
     val3(i) = Dram1;

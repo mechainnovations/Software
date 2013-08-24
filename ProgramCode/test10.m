@@ -4,8 +4,8 @@ clear all;
 close all;
 N = 50;
 
-xPos = linspace(0.5,7  ,N);  % All xValues
-yPos = linspace(-6, 6  ,N);  % All yValues
+xPos = linspace(2.4,7.5  ,N);  % All xValues
+yPos = linspace(-2.5, 4.5  ,N);  % All yValues
 tht3 = linspace(0 ,360,N);  % All theta3 Values
 
 

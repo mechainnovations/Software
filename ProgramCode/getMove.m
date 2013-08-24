@@ -23,8 +23,8 @@ val = 0.15;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
-    tAxis = 4; maxMoveT = 0.5;
-    rAxis = 2; maxMoveR = 1;
+    tAxis = 3; maxMoveT = 5;
+    rAxis = 2; maxMoveR = -1;
     zAxis = 5; maxMoveZ = -1;
     slewAxis = 3; maxMoveSlew = 250;
 

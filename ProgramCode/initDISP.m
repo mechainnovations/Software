@@ -23,7 +23,7 @@ I_des = I_cur;
 
 
 
-% % Draw the initial digger to speed up the process
+% Draw the initial digger to speed up the process
 % actualPos = subplot(1,2,1);
 % h1 = plot([0        D_cur(1)], [0        D_cur(2)], '-ob'); hold on;  %AD
 % h2 = plot([C_cur(1) F_cur(1)], [C_cur(2) F_cur(2)], '-ob'); hold on;  %CF

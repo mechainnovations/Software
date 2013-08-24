@@ -71,22 +71,19 @@ if t <= 0
     end
 end
 
-% || DE > 2.8732 || DE < 1.6943 || BC < 1.7682 || BC > 2.5208
-% Limit angles so that they exist within reality
+% Boom
+if theta1 > 115
+    theta1 = NaN;
+elseif theta1 < -10
+    theta1 = NaN;
+end
 
-% % Boom
-% if theta1 > 115
-%     theta1 = 115;
-% elseif theta1 < -10
-%     theta1 = -10;
-% end
-% 
-% % Stick
-% if theta2 > -5
-%     theta2 = -5;
-% elseif theta2 < -150
-%     theta2 = -150;
-% end
+% Stick
+if theta2 > -5
+    theta2 = NaN;
+elseif theta2 < -150
+    theta2 = NaN;
+end
 
 
 
