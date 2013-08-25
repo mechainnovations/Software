@@ -1,7 +1,7 @@
 % Initialise the PID Handlers
 
-boomPID  = createCtrlHandle(4000,2000,300,220,1,160);
-stickPID = createCtrlHandle(1000,1800,200,250,1,180);
+boomPID  = createCtrlHandle(900,0,0,250,1,0);
+stickPID = createCtrlHandle(900,0,0,250,1,0);
 
 % Gains based on extending/retracting
 boomGainsExt = [4000 2000 200];

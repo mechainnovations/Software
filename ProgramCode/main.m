@@ -46,19 +46,19 @@ while 1
     %ctheta1 = 180+boomAngle + 7.9124 + 29.2404;
     ctheta1 = boomAngle-218.22+360+29.24+7.9124;
     ctheta2 = stickAngle;
-    %ctheta3 = 180+bucketAngle;
+    ctheta3 = 180+bucketAngle;
     ctheta4 = slewAngle;
     
-    %tets
-    ctheta1 = 103;
-    ctheta2 = -63.5;
-    ctheta3 = ctheta3 + dtheta;
+
     
     % Calculate the current position
     [C_cur,D_cur,E_cur,F_cur,I_cur,H_cur,G_cur,J_cur,K_cur,~] = ...
         calcPositionFromAngles(ctheta1,ctheta2,ctheta3);
     curPointBC = norm([0.68 -.408] - C_cur);
     curPointDE = norm(D_cur - E_cur);
+    
+
+    
     
     % New coding for matrix operations
     [dtheta, dr, dz, dslew] = getMove(joyID,'xbox');
@@ -68,9 +68,13 @@ while 1
     % be in plus the joystick. If joystick is released then stop
     if (dr == 0) && (dz == 0)
         STOP = true;
-        I_des = I_cur;
     else
         STOP = false;
+    end
+    
+    if STOP == true
+        I_des = I_cur;
+    else
         I_des = I_des + [dr, dz];
     end
     
@@ -78,8 +82,8 @@ while 1
     [dtheta1, dtheta2]  = calcAnglesFromPosition(I_des,[0,0]);
     
     % Check to ensure we are still legit
-    while (isnan(dtheta1) || isnan(dtheta2))
-        I_des = I_des - [dr, dz];
+    if (isnan(dtheta1) || isnan(dtheta2))
+        I_des = I_cur;
         [dtheta1, dtheta2]  = calcAnglesFromPosition(I_des,[0,0]);
     end
     
@@ -99,7 +103,7 @@ while 1
     % set points.
     if testing == 0
         timerPID    = timerPID + 1;
-        timerPIDMax = 10;
+        timerPIDMax = 1;
         if timerPID > timerPIDMax && STOP == false
             [boomPID, boomRam]   = calcPID ( boomPID );
             [stickPID, stickRam] = calcPID ( stickPID );
@@ -108,6 +112,10 @@ while 1
         elseif STOP == true
             boomRam  = 0;
             stickRam = 0;
+            
+            % Reset the integral error
+            boomPID.IntE  = 0;
+            stickPID.IntE = 0;
         end
     else
         boomRam  = 250 * -dz;
