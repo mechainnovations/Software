@@ -89,10 +89,6 @@ if displayTimer > displayTimeOut
     yy = yy - dyy;
     text(xx,yy,['Record  : ' num2str(record)],'color',col);
     yy = yy - dyy;
-    text(xx,yy,['Stick Err  : ' num2str(stickPID.CE)],'color',col);
-    yy = yy - dyy;
-    text(xx,yy,['Stick Err  : ' num2str(stickPID.PID/1000)],'color',col);
-    yy = yy - dyy;
     axis([-1 1 yy 1]);
     
     drawnow;
