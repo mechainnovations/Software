@@ -19,11 +19,11 @@ I_des = I_cur;
 
 
 % Draw the initial digger to speed up the process
-FigHandle = figure('Position', [20, 60, 1648, 768]);
+FigHandle = figure('Position', [20, 20, 1648, 768]);
 subplot(2,2,4);
 points = bucketLinkagePoints(H_cur,I_cur,J_cur,K_cur);
 h1 = plot(points(:,1),points(:,2),'-ok'); hold on;
-L_cur = points(4,:);
+
 points = boomPoints(C_cur,D_cur,F_cur);
 h2 = plot(points(:,1),points(:,2),'-ok');
 

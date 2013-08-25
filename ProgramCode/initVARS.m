@@ -34,4 +34,10 @@ boomRam   = 0;
 stickRam  = 0;
 bucketRam = 0;
 
+% Testing Varaibles
+timerPID = 0;
+testing  = 0;
+record   = 0;
+TT       = 0;
+Lpos     = 0;
 

@@ -5,7 +5,7 @@ points(1,:) = [0 0];         % A
 points(2,:) = C;             % C
 points(3,:) = F;             % F
 points(4,:) = D;             % D
-points(5,:) = [0 0];         % A
+points(5,:) = C;             % C
 
 end
 

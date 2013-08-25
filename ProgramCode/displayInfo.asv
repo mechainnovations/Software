@@ -33,28 +33,24 @@ if displayTimer > displayTimeOut
     subplot(2,3,1);
     set(h8,'XData',xVector,'YData',yVector);
     if Lpos
-        set(h8,'MarkerEdgeColor','g');
+        set(h8,'MarkerEdgeColor'.g');
     else
-        set(h8,'MarkerEdgeColor','b');
+        set(h8,'MarkerEdgeColor,'.b');
     end
-    if Lpos
-        title('L Point Tracking');
-    else
-        title('I Point Tracking');
-    end
+    title('Bucket Position');
     axis([0 6.5 -1 4]);
     
     subplot(2,3,2);
     set(h9,'XData',x,{'YData'},...
         {boomK;stickK});
-    axis([0 250*4 1.5 3.0]);
+    axis([0 250*4 2 3.5]);
     title('Ram Curves');
     
     subplot(2,3,3)
     set(h10,'XData',x,{'YData'},...
         {setPointBCVect;setPointDEVect;curPointBCVect;curPointDEVect});
     title('Ram Velocities');
-    axis([0 250*4 -280 280]);
+    axis([0 250*4 -250 250]);
     
     subplot(2,2,3);
     plot(-10,-10);
@@ -78,6 +74,8 @@ if displayTimer > displayTimeOut
     text(xx,yy,['Testing : ' num2str(testing)]);
     yy = yy - dyy;
     text(xx,yy,['Record : ' num2str(record)]);
+    yy = yy - dyy;
+    text(xx,yy,['Meas L? : ' num2str(Lpos)]);
     yy = yy - dyy;
     axis([-1 1 yy 1]);
     

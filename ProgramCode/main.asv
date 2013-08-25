@@ -77,10 +77,10 @@ while 1
     % Calculate the setpoint based on the desired position
     [dtheta1, dtheta2]  = calcAnglesFromPosition(I_des,[0,0]);
     
-    % Check to ensure we are still legit
-    while (isnan(dtheta1) || isnan(dtheta2))
-        I_des = I_des - [dr, dz];
-        [dtheta1, dtheta2]  = calcAnglesFromPosition(I_des,[0,0]);
+    % Che
+    if isnan(dtheta1) || isnan(dtheta2)
+        [dtheta1, dtheta2]  = calcAnglesFromPosition(I_des,[-dr,-dz]);
+        
     end
     
     [Cd,Dd,Ed,Fd,Id,Hd,Gd,Jd,Kd,~] = ...

@@ -23,10 +23,10 @@ val = 0.15;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
-    tAxis = 3; maxMoveT = 5;
-    rAxis = 2; maxMoveR = -1;
-    zAxis = 5; maxMoveZ = -1;
-    slewAxis = 3; maxMoveSlew = 250;
+    tAxis = 3; maxMoveT = 1;
+    rAxis = 2; maxMoveR = -0.01;
+    zAxis = 5; maxMoveZ = -0.01;
+    %slewAxis = 3; maxMoveSlew = 250;
 
     % Calculate the New Steps
     if abs(axes(tAxis)) > val
@@ -41,9 +41,9 @@ if strcmp(type,'xbox')
         zheight = axes(zAxis) * maxMoveZ;
     end
     
-    if abs(axes(slewAxis)) > val
-        slew = axes(slewAxis) * maxMoveSlew;
-    end
+%     if abs(axes(slewAxis)) > val
+%         slew = axes(slewAxis) * maxMoveSlew;
+%     end
 end
 
 % SpaceMousePro requires a differentiator to find the -1 -> 1 value
