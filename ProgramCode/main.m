@@ -21,7 +21,7 @@ curPointDEVect = zeros(1,length(x));
 
 
 %% Initialisation Functions
-%initCAN();             % CAN Initilisation
+initCAN();             % CAN Initilisation
 [joyID] = initJOY();   % Joystick Initilisation
 initVARS();            % Certain Variables needed within code
 initDISP();            % Setup figure handles for the GUI
@@ -34,6 +34,12 @@ ctheta3 = -45;
 
 dtheta = 0;
 
+% Emulation Stuff
+% [C_cur,D_cur,E_cur,F_cur,I_cur,H_cur,G_cur,J_cur,K_cur,~] = ...
+%     calcPositionFromAngles(ctheta1,ctheta2,ctheta3);
+% curPointBC = norm([0.68 -.408] - C_cur);
+% curPointDE = norm(D_cur - E_cur);
+% BB = 0;
 
 
 % Main Program Loop
@@ -42,14 +48,19 @@ while 1
     tic;
     
     % Read angles from CAN
-    % getAngles(  );
+    getAngles(  );
     %ctheta1 = 180+boomAngle + 7.9124 + 29.2404;
     ctheta1 = boomAngle-218.22+360+29.24+7.9124;
     ctheta2 = stickAngle;
     ctheta3 = 180+bucketAngle;
     ctheta4 = slewAngle;
     
-
+%     % Emulate stuff
+%     BB = BB + bucketRam/250;
+%     ctheta3 = ctheta1 + ctheta2 + BB;
+%     curPointBC = curPointBC + boomRam/5000;
+%     curPointDE = curPointDE + stickRam/5000;
+%     emRams;
     
     % Calculate the current position
     [C_cur,D_cur,E_cur,F_cur,I_cur,H_cur,G_cur,J_cur,K_cur,~] = ...
@@ -116,22 +127,26 @@ while 1
             % Reset the integral error
             boomPID.IntE  = 0;
             stickPID.IntE = 0;
+            
+            % Reset the error
+            boomPID.CE  = 0;
+            stickPID.CE = 0;
         end
     else
         boomRam  = 250 * -dz;
         stickRam = 250 * -dr;
     end
-    bucketRam = 200 * dtheta;
+    bucketRam = 250 * dtheta;
     
     
     % Send the ram values over CAN. The slew ram is currently not working.
     % This needs to be fixed later (probably once we have the digger
     % working correctly)!
-    %     if ~isnan(boomRam) && ~isnan(stickRam) && ~isnan(bucketRam)
-    %         updateRams(canChan,-boomRam,stickRam,bucketRam, dslew);
-    %     else
-    %         updateRams(canChan,0,0,0, dslew);
-    %     end
+    if ~isnan(boomRam) && ~isnan(stickRam) && ~isnan(bucketRam)
+        updateRams(canChan,-boomRam,stickRam,bucketRam, dslew);
+    else
+        updateRams(canChan,0,0,0, dslew);
+    end
     
     
     % Turn testing ON/OFF (control the rams normally)

@@ -34,6 +34,12 @@ boomRam   = 0;
 stickRam  = 0;
 bucketRam = 0;
 
+% Path Points
+curPointBC = 0;
+curPointDE = 0;
+setPointBC = 0;
+setPointDE = 0;
+
 % Testing Varaibles
 timerPID = 0;
 testing  = 0;

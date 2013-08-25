@@ -1,6 +1,6 @@
 % Display initialisation
 displayTimer   = 0;
-displayTimeOut = 5;
+displayTimeOut = 1;
 % Intial Position Setup
 C_cur = [0, 0];
 D_cur = [0, 0];
