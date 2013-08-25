@@ -19,8 +19,8 @@ I_des = I_cur;
 
 
 % Draw the initial digger to speed up the process
-FigHandle = figure('Position', [20, 60, 1648, 768]);
-subplot(2,2,4);
+FigHandle = figure('Position', [20, 60, 1648, 768],'color',[0 0 0]);
+subplot(2,4,6:8);
 points = bucketLinkagePoints(H_cur,I_cur,J_cur,K_cur);
 h1 = plot(points(:,1),points(:,2),'-ok'); hold on;
 L_cur = points(4,:);
@@ -41,7 +41,7 @@ ctheta3 = 0;
 
 points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
 h7 = plot(points(:,1),points(:,2),'-k');
-
+axis equal;
 subplot(2,3,1);
 h8 = plot(xVector,yVector,'.b');
 subplot(2,3,3)
