@@ -21,7 +21,7 @@ curPointDEVect = zeros(1,length(x));
 
 
 %% Initialisation Functions
-initCAN();             % CAN Initilisation
+%initCAN();             % CAN Initilisation
 [joyID] = initJOY();   % Joystick Initilisation
 initVARS();            % Certain Variables needed within code
 initDISP();            % Setup figure handles for the GUI
@@ -48,12 +48,11 @@ while 1
     tic;
     
     % Read angles from CAN
-    getAngles(  );
-    %ctheta1 = 180+boomAngle + 7.9124 + 29.2404;
-    ctheta1 = boomAngle-218.22+360+29.24+7.9124;
-    ctheta2 = stickAngle;
-    ctheta3 = 180+bucketAngle;
-    ctheta4 = slewAngle;
+%     getAngles(  );
+%     ctheta1 = boomAngle-218.22+360+29.24+7.9124;
+%     ctheta2 = stickAngle;
+%     ctheta3 = 180+bucketAngle;
+%     ctheta4 = slewAngle;
     
 %     % Emulate stuff
 %     BB = BB + bucketRam/250;
@@ -116,8 +115,8 @@ while 1
         timerPID    = timerPID + 1;
         timerPIDMax = 1;
         if timerPID > timerPIDMax && STOP == false
-            [boomPID, boomRam]   = calcPID ( boomPID );
-            [stickPID, stickRam] = calcPID ( stickPID );
+            [boomPID, boomRam]   = calcPID ( boomPID  , I_cur);
+            [stickPID, stickRam] = calcPID ( stickPID , I_cur);
             
             timerPID = 0;
         elseif STOP == true
@@ -142,11 +141,11 @@ while 1
     % Send the ram values over CAN. The slew ram is currently not working.
     % This needs to be fixed later (probably once we have the digger
     % working correctly)!
-    if ~isnan(boomRam) && ~isnan(stickRam) && ~isnan(bucketRam)
-        updateRams(canChan,-boomRam,stickRam,bucketRam, dslew);
-    else
-        updateRams(canChan,0,0,0, dslew);
-    end
+%     if ~isnan(boomRam) && ~isnan(stickRam) && ~isnan(bucketRam)
+%         updateRams(canChan,-boomRam,stickRam,bucketRam, dslew);
+%     else
+%         updateRams(canChan,0,0,0, dslew);
+%     end
     
     
     % Turn testing ON/OFF (control the rams normally)

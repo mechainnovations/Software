@@ -3,10 +3,6 @@ function [ ctrlHandle ] = createCtrlHandle( k_p, k_d, k_i, maxE, maxWindUp, offs
 
 ctrlHandle = struct();
 
-ctrlHandle.Gains.Kp = k_p;   % Proportional Gain
-ctrlHandle.Gains.Kd = k_d;   % Derivative Gain
-ctrlHandle.Gains.Ki = k_i;   % Integral Gain
-
 ctrlHandle.Contrib.P = 0; % Proportional Contribution
 ctrlHandle.Contrib.I = 0; % Proportional Contribution
 ctrlHandle.Contrib.D = 0; % Proportional Contribution
@@ -25,6 +21,34 @@ ctrlHandle.MAX    = maxE;      % Max return values
 ctrlHandle.Windup = maxWindUp; % Integral windup maximum
 
 ctrlHandle.Offset = offset;   % Offset for the PID controller
+
+
+% Create a matrix that contains all of the for each variable set of gains:
+ctrlHandle.res  =  0.1;
+ctrlHandle.xVal =  2:ctrlHandle.res:8;
+ctrlHandle.yVal = -1:ctrlHandle.res:4;
+
+% Setup the matrix with gains (for now constant gains)
+% Proportional
+for x = 1:length(ctrlHandle.xVal)
+    for y = 1:length(ctrlHandle.yVal)
+        ctrlHandle.Gains.Kp(y,x) = k_p;
+    end
+end
+
+% Derivative
+for x = 1:length(ctrlHandle.xVal)
+    for y = 1:length(ctrlHandle.yVal)
+        ctrlHandle.Gains.Kd(y,x) = k_d;
+    end
+end
+
+% Integral
+for x = 1:length(ctrlHandle.xVal)
+    for y = 1:length(ctrlHandle.yVal)
+        ctrlHandle.Gains.Ki(y,x) = k_i;
+    end
+end
 
 end
 

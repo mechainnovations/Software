@@ -28,7 +28,7 @@ if displayTimer > displayTimeOut
     points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
     set(h7,'XData',points(:,1),'YData',points(:,2));
     L_cur = points(4,:);
-    axis([-1 6 -1 6]);
+    axis([-1 6 -2 6]);
     title('Digger','color',col);
     set(gca,'XColor',col);
     set(gca,'YColor',col);

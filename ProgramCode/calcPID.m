@@ -1,18 +1,27 @@
-function [ ctrlHandle, returnValue ] = calcPID( ctrlHandle )
+function [ ctrlHandle, returnValue ] = calcPID( ctrlHandle, I_cur )
 % Calculates the new PID value and returns the new struct containing the
 % new information about the controller.
 
-% Gains for Each gain
-kp = ctrlHandle.Gains.Kp(1);
-kd = ctrlHandle.Gains.Kd(1);
-ki = ctrlHandle.Gains.Ki(1);
+% ctrlHandle = controller handle containing setpoint information
+% I_cur      = so the gains can be adaptive
+
+% Look-up all of the gains for each one
+kp = interp2(ctrlHandle.xVal(1),ctrlHandle.yVal(1)...
+    ,ctrlHandle.Gains.Kp(1),I_cur(1),I_cur(2)); 
+
+kd = interp2(ctrlHandle.xVal(1),ctrlHandle.yVal(1)...
+    ,ctrlHandle.Gains.Kd(1),I_cur(1),I_cur(2)); 
+
+ki = interp2(ctrlHandle.xVal(1),ctrlHandle.yVal(1)...
+    ,ctrlHandle.Gains.Ki(1),I_cur(1),I_cur(2)); 
+
 
 % PID Control 
 dt               = cputime - ctrlHandle.T(1); % Delta Time Step
 ctrlHandle.T(1)  = cputime;
 
 % Error
-ctrlHandle.CE(1) = ctrlHandle.SP(1) - ctrlHandle.CV(1);
+ctrlHandle.CE(1)     = ctrlHandle.SP(1)    - ctrlHandle.CV(1);
 
 ctrlHandle.IntE(1)   = ctrlHandle.IntE(1)  + ctrlHandle.CE(1) ;
 
