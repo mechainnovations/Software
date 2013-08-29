@@ -1,7 +1,7 @@
 % Initialise the PID Handlers
 
-boomPID  = createCtrlHandle(900,500,0,250,1,0);
-stickPID = createCtrlHandle(900,500,0,250,1,0);
+boomPID  = createCtrlHandle('boomGainsExt.xlsx','boomGainsRet.xlsx',220,1,160);
+stickPID = createCtrlHandle('stickGainsExt.xlsx','stickGainsRet.xlsx',250,1,180);
 
 % Gains based on extending/retracting
 boomGainsExt = [4000 2000 200];

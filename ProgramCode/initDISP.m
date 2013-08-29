@@ -1,6 +1,6 @@
 % Display initialisation
 displayTimer   = 0;
-displayTimeOut = 5;
+displayTimeOut = 10;
 % Intial Position Setup
 C_cur = [0, 0];
 D_cur = [0, 0];
@@ -36,6 +36,21 @@ h4 = plot(a(:,1),a(:,2),'-or','Linewidth',2);
 h5 = plot(b(:,1),b(:,2),'-oy','Linewidth',2);
 h6 = plot(c(:,1),c(:,2),'-og','Linewidth',2);
 
+% Drawing the digger Body
+subplot(2,4,6:8);
+col = [225 192 9]./255;
+points = bodyPoints;
+h12 = fill(points(:,1),points(:,2),col);
+
+points = windowPoints;
+h13 = fill(points(:,1),points(:,2),'c');
+
+% Ground
+points = [-20 -1.2; 20 -1.2; 20 -10; -20 -10; -20 -1.2];
+h14 = fill(points(:,1),points(:,2),[185 122 87]./255);
+
+
+
 %Set ctheta3 to zero
 ctheta3 = 0;
 
@@ -49,16 +64,4 @@ h9 = plot(x,[boomK', stickK']);
 subplot(2,3,2);
 h10 = plot(x,[setPointBCVect', setPointDEVect',curPointBCVect', curPointDEVect']);
 
-% Drawing the digger Body
-subplot(2,4,6:8);
-col = [225 192 9]./255;
-points = bodyPoints;
-h12 = fill(points(:,1),points(:,2),col);
-
-points = windowPoints;
-h13 = fill(points(:,1),points(:,2),'c');
-
-% Ground
-points = [-20 -1.2; 20 -1.2; 20 -10; -20 -10; -20 -1.2];
-h14 = fill(points(:,1),points(:,2),[185 122 87]./255);
 

@@ -9,7 +9,7 @@ function [ ctrlHandle, returnValue ] = calcPID( ctrlHandle, I_cur )
 % Check to see if we use Extend/Retract gains
 dedt = ctrlHandle.SP(1) - ctrlHandle.PSP(1);
 
-if dedt > 0
+if dedt < 0
     % Look-up all of the gains for each one
     kp = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
         ,ctrlHandle.ExtGains.Kp,I_cur(1),I_cur(2)); 
@@ -22,13 +22,13 @@ if dedt > 0
 else
         % Look-up all of the gains for each one
     kp = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Kp,I_cur(1),I_cur(2)); 
+        ,ctrlHandle.R.Kp,I_cur(1),I_cur(2)); 
 
     kd = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Kd,I_cur(1),I_cur(2)); 
+        ,ctrlHandle.GainsRet.Kd,I_cur(1),I_cur(2)); 
 
     ki = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Ki,I_cur(1),I_cur(2));
+        ,ctrlHandle.GainsRet.Ki,I_cur(1),I_cur(2));
 end
 
 % PID Control 
@@ -74,11 +74,11 @@ if ~isnan(ctrlHandle.Contrib.P(1))
 end
 
 if ~isnan(ctrlHandle.Contrib.I)
-    ctrlHandle.PID(1) = ctrlHandle.PID(1) + ctrlHandle.Contrib.I(1);
+    ctrlHandle.PID(1) = ctrlHandle.PID(1) - ctrlHandle.Contrib.I(1);
 end
 
 if ~isnan(ctrlHandle.Contrib.D)
-    ctrlHandle.PID(1) = ctrlHandle.PID(1) - ctrlHandle.Contrib.D(1);
+    ctrlHandle.PID(1) = ctrlHandle.PID(1) + ctrlHandle.Contrib.D(1);
 end
 
 
