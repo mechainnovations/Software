@@ -1,4 +1,4 @@
-function [ ] = updateRams( canChan, boomRam, stickRam, bucketRam )
+function [ ] = updateRams( canChan, boomRam, stickRam, bucketRam, slewRam )
 % Update the RAM Velocities from the outputs of P(I)D Controller
 
 % Note: The extend retrat may be incorrect. Recommend checking this in the
@@ -30,6 +30,15 @@ if bucketRam >= 0
     transmitRams2CAN(canChan,'bucket',floor(bucketRam),'true');
 else
     transmitRams2CAN(canChan,'bucket',floor(abs(bucketRam)),'false'); 
+end
+
+% Slew:
+%    >=0 : Clockwise
+%    < 0 : AntiClockwise
+if slewRam >= 0
+    transmitRams2CAN(canChan,'slew',floor(slewRam),'true');
+else
+    transmitRams2CAN(canChan,'slew',floor(abs(slewRam)),'false'); 
 end
 
 

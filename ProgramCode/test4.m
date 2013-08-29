@@ -20,7 +20,7 @@ h2 = plot(t,val1,'c'); hold on;
 h3 = plot(t,val2,'g');
 h4 = plot(t,val3,'b');
 h5 = plot(t,val4,'k'); hold off;
-
+JJ = 0;
 while 1
     
     axes1 = read(joy);
@@ -37,8 +37,8 @@ while 1
     end
     
     
-    [a b c] = getPIDRam([Dram1, Dram2, 0], [Cram1, Cram2, 0],[10,10000,1],...
-        [10,500000,1],[1,1,1]);
+    [a b c] = getPIDRam([Dram1, Dram2, 0], [Cram1, Cram2, 0],[20,5,0],...
+        [0.9,1,1],[1,1,1]);
     
     Cram1 = Cram1 + a/75;
     Cram2 = Cram2 + b/75;
@@ -47,7 +47,13 @@ while 1
 
     
 
-    
+    JJ = JJ+1;
+%     if JJ > 30
+%         JJ = 0;
+%         Cram1 = Cram1 + 10;
+%         Cram2 = Cram2 + 10;
+%         pause(0.2)
+%     end
     val1(i) = Cram1;
     val2(i) = Cram2;
     val3(i) = Dram1;
@@ -56,21 +62,17 @@ while 1
     if i > 1000
         i = 1;
     end
-    e = cputime;
-
-    r1 = cputime - e;
-    e = cputime;
+    tic
     set(h2,'XData',t,'YData',val1);
     set(h3,'XData',t,'YData',val2);
     set(h4,'XData',t,'YData',val3);
     set(h5,'XData',t,'YData',val4);
     axis([0 1000, -125 125]);
     drawnow;
-    r2 = cputime - e;
+    r2 = toc;
     clc;
     
-    disp(['Hz1: ' num2str(r1)]);
-    disp(['Hz2: ' num2str(r2)]);
+    disp(['Hz: ' num2str(r2)]);
     disp(['Dram2: ' num2str(Dram2)]);
     disp(['Cram1: ' num2str(Cram1)]);
     disp(['Dram1: ' num2str(Dram1)]);

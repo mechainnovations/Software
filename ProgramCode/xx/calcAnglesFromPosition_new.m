@@ -49,11 +49,7 @@ if t > 0
     % Theta 2
     theta2 = atan2d(I_des(2) - F(2), I_des(1) - F(1));
     
-<<<<<<< HEAD
     % Ram Distance Check this allows ensuring the Boom
-=======
-%     % Ram Distance Check this allows ensuring the Boom
->>>>>>> origin/TL-Tetsing
 %     [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
 %     DE = norm(tE - tD);
 %     BC = norm([0.68 -0.408] - tC);
@@ -63,31 +59,28 @@ end
 if t <= 0 
     % Get the intersection point
     F = calcIntersectionPoint( I );
-    
-    if imag(F) == 0
-        % Theta 1
-        theta1 = atan2d(F(2),F(1)) + alpha2;
-        % Theta 2
-        theta2 = atan2d(I(2) - F(2), I(1) - F(1));
-    else
-        theta1 = NaN;
-        theta2 = NaN;
-    end
+    % Theta 1
+    theta1 = atan2d(F(2),F(1)) + alpha2 + alpha1;
+    % Theta 2
+    theta2 = atan2d(I(2) - F(2), I(1) - F(1));
 end
 
-% Boom
-if theta1 > 115
-    theta1 = NaN;
-elseif theta1 < -10
-    theta1 = NaN;
-end
+% || DE > 2.8732 || DE < 1.6943 || BC < 1.7682 || BC > 2.5208
+% Limit angles so that they exist within reality
 
-% Stick
-if theta2 > -5
-    theta2 = NaN;
-elseif theta2 < -150
-    theta2 = NaN;
-end
+% % Boom
+% if theta1 > 115
+%     theta1 = 115;
+% elseif theta1 < -10
+%     theta1 = -10;
+% end
+% 
+% % Stick
+% if theta2 > -5
+%     theta2 = -5;
+% elseif theta2 < -150
+%     theta2 = -150;
+% end
 
 
 

@@ -15,3 +15,4 @@ pause(1);  % Wait 1 second
 transmitRams2CAN(canChan,'boom', 0, 'true');
 transmitRams2CAN(canChan,'stick', 0, 'true');
 transmitRams2CAN(canChan,'bucket', 0, 'true');
+transmitRams2CAN(canChan,'slew', 0, 'true');

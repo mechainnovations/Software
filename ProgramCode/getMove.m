@@ -1,4 +1,4 @@
-function [ theta, radius, zheight ] = getMove( joyID, type )
+function [ theta, radius, zheight, slew ] = getMove( joyID, type )
 % Calculate the step change due to joystick
 persistent prevStep; % Differentiator for mouse pro
 dt = 1;
@@ -12,6 +12,7 @@ end
 theta   = 0;
 radius  = 0;
 zheight = 0;
+slew = 0;
 
 % Value axis must be above to move.
 val = 0.15;
@@ -22,9 +23,16 @@ val = 0.15;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
+<<<<<<< HEAD
     tAxis = 3; maxMoveT = 5;
     rAxis = 2; maxMoveR = -0.1;
     zAxis = 5; maxMoveZ = -0.1;
+=======
+    tAxis = 3; maxMoveT = 1;
+    rAxis = 2; maxMoveR = -0.005;
+    zAxis = 5; maxMoveZ = -0.005;
+    %slewAxis = 3; maxMoveSlew = 250;
+>>>>>>> origin/TL-Tetsing
 
     % Calculate the New Steps
     if abs(axes1(tAxis)) > val
@@ -38,6 +46,10 @@ if strcmp(type,'xbox')
     if abs(axes1(zAxis)) > val
         zheight = axes1(zAxis) * maxMoveZ;
     end
+    
+%     if abs(axes(slewAxis)) > val
+%         slew = axes(slewAxis) * maxMoveSlew;
+%     end
 end
 
 % SpaceMousePro requires a differentiator to find the -1 -> 1 value

@@ -1,5 +1,5 @@
 function [ boomRam, stickRam, bucketRam ] = getPIDRam( desExt, curExt,...
-    boomGains, stickGains, bucketGains )
+    boomGains, stickGains, bucketGains, RESET )
 % Inputs
 % desExt = 3x1 vector containing the desired extensions for the 3 Rams
 % desExt = 3x1 vector containing the current extensions for the 3 Rams
@@ -16,18 +16,18 @@ persistent prevBucketErr;      % Previous Bucket Extension
 persistent integralBoomError;  % Integral error accumulator
 persistent integralStickError; % Integral error accumulator
 persistent integralBucketError;% Integral error accumulator
-persistent ramBoom;            % Ram value for the Boom
-persistent ramStick;           % Ram value for the Stick
+% persistent ramBoom;            % Ram value for the Boom
+% persistent ramStick;           % Ram value for the Stick
 persistent ramBucket;          % Ram value for the Stick
 
 % Max/Min values for the rams
-maxBoomValue    = 250;
+maxBoomValue    = 220;
 maxStickValue   = 250;
 maxBucketValue  = 250;
 
 % Initialisation of the persistent variables (only need to check one)
-if isempty(ramBoom)
-    Td                  = 0;
+if isempty(Td) || RESET == 1
+    Td                  = cputime;
     ramBoom             = 0;
     ramStick            = 0;
     ramBucket           = 0;
@@ -68,6 +68,29 @@ integralBoomError   = integralBoomError  + boomError;
 integralStickError  = integralStickError + stickError;
 integralBucketError = integralBucketError + bucketError;
 
+% Limit the Integral Error
+intErrMax = 1;   % [m]
+
+if integralBoomError > intErrMax
+    integralBoomError = intErrMax;
+elseif integralBoomError < -intErrMax
+    integralBoomError = -intErrMax;
+end
+
+if integralStickError > intErrMax
+    integralStickError = intErrMax;
+elseif integralStickError < -intErrMax
+    integralStickError = -intErrMax;
+end
+
+if integralBucketError > intErrMax
+    integralBucketError = intErrMax;
+elseif integralBucketError < -intErrMax
+    integralBucketError = -intErrMax;
+end
+
+
+% Derivative Error
 boomDErr   = (boomError   - prevBoomErr);
 stickDErr  = (stickError  - prevStickErr);
 bucketDErr = (bucketError - prevBucketErr);
@@ -84,9 +107,9 @@ iStick    = Stk_i * integralStickError;
 iBucket   = Buk_i * integralBucketError;
 
 % D Gain
-dBoom     = Bok_d * boomDErr;
-dStick    = Stk_d * stickDErr;
-dBucket   = Buk_d * bucketDErr;
+dBoom     = Bok_d * boomDErr ;
+dStick    = Stk_d * stickDErr ;
+dBucket   = Buk_d * bucketDErr ;
 
 
 % Get previous values to calculate velocity
@@ -98,15 +121,26 @@ prevBucketErr  = bucketError;
 % ramBoom   = ramBoom + pBoom + dBoom;
 % ramStick  = ramStick + pStick + dStick;
 % ramBucket = ramBucket + pBucket + dBucket;
+if dt < 0.01
+    dt = 0.01;
+end
 
-ramBoom   = pBoom + dBoom;
-ramStick  = pStick + dStick;
-ramBucket = ramBucket + pBucket + dBucket;
+
+ramBoom   = pBoom - dBoom*dt + iBoom*dt;
+ramBoom   = ramBoom + (sign(ramBoom) * 160 );
+ramStick  = pStick - dStick*dt + iStick*dt;% + iStick/dt;
+ramStick  = ramStick + (sign(ramStick) * 180 );
+ramBucket = pBucket - dBucket;
 
 
-boomRam   = round(ramBoom);
-stickRam  = round(ramStick);
-bucketRam = round(ramBucket);
+
+boomRam   = ramBoom; %round(ramBoom);
+stickRam  = ramStick; %round(ramStick);
+bucketRam = round(pBucket - dBucket);
+
+
+
+
 
 % Need to limit the values to the maximum ram value;
 
