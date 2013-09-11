@@ -1,7 +1,8 @@
 function [theta1, theta2] = calcAnglesFromPosition(I, dI)
 % This function will find the theta1 and theta2  from a given I and an
 % intial movement. Also limits the angle so that the boom will not break.
-
+theta1 = NaN;
+theta2 = NaN;
 % Contains error checking to help keep consistency
 
 
@@ -49,11 +50,6 @@ if t > 0
     % Theta 2
     theta2 = atan2d(I_des(2) - F(2), I_des(1) - F(1));
     
-<<<<<<< HEAD
-    % Ram Distance Check this allows ensuring the Boom
-=======
-%     % Ram Distance Check this allows ensuring the Boom
->>>>>>> origin/TL-Tetsing
 %     [tC,tD,tE,tF,tI] = calcPositionFromAngles(theta1, theta2);
 %     DE = norm(tE - tD);
 %     BC = norm([0.68 -0.408] - tC);

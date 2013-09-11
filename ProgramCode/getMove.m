@@ -1,4 +1,4 @@
-function [ theta, radius, zheight, slew ] = getMove( joyID, type )
+function [ theta, radius, zheight, slew, Lpos, record, testing ] = getMove( joyID, Lpos, record, testing, type )
 % Calculate the step change due to joystick
 persistent prevStep; % Differentiator for mouse pro
 dt = 1;
@@ -23,16 +23,10 @@ val = 0.15;
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
-<<<<<<< HEAD
-    tAxis = 3; maxMoveT = 5;
-    rAxis = 2; maxMoveR = -0.1;
-    zAxis = 5; maxMoveZ = -0.1;
-=======
-    tAxis = 3; maxMoveT = 1;
+    tAxis = 3; maxMoveT = 0.5;
     rAxis = 2; maxMoveR = -0.005;
     zAxis = 5; maxMoveZ = -0.005;
     %slewAxis = 3; maxMoveSlew = 250;
->>>>>>> origin/TL-Tetsing
 
     % Calculate the New Steps
     if abs(axes1(tAxis)) > val
@@ -50,14 +44,38 @@ if strcmp(type,'xbox')
 %     if abs(axes(slewAxis)) > val
 %         slew = axes(slewAxis) * maxMoveSlew;
 %     end
+        % Turn testing ON/OFF (control the rams normally)
+    [a, b] = read(joyID);
+    if b(3) == 1
+        testing = ~testing;
+        while (b(3) == 1)
+            [a, b] = read(joyID);
+        end
+    end
+    
+    % Record Position?
+    if b(1) == 1
+        record = ~record;
+        while (b(1) == 1)
+            [a, b] = read(joyID);
+        end
+    end
+    
+    % Record Position?
+    if b(2) == 1
+        Lpos = ~Lpos;
+        while (b(2) == 1)
+            [a, b] = read(joyID);
+        end
+    end
 end
 
 % SpaceMousePro requires a differentiator to find the -1 -> 1 value
 if strcmp(type,'spacemouse')
     % Configurable numbers for different Joystick setups.
-    tAxis = 4; maxMoveT = -2;
-    rAxis = 2; maxMoveR = -0.1;
-    zAxis = 3; maxMoveZ = -0.1;
+    tAxis = 6; maxMoveT = 0.5;
+    rAxis = 2; maxMoveR = -0.005;
+    zAxis = 3; maxMoveZ = -0.005;
     
     % Differentiate to get the velocity
     axesR = ( axes1 - prevStep ) / 0.05;
@@ -85,10 +103,5 @@ if strcmp(type,'spacemouse')
     radius  = axesR(rAxis) * maxMoveR;
     zheight = axesR(zAxis) * maxMoveZ;
 
-    clc;
-    for i = 1:length(axesR)
-        disp(['Axes ' num2str(i) ': ' num2str(axesR(i))]);
-    end
- 
 end
 

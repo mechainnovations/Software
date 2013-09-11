@@ -9,27 +9,11 @@ function [ ctrlHandle, returnValue ] = calcPID( ctrlHandle, I_cur )
 % Check to see if we use Extend/Retract gains
 dedt = ctrlHandle.SP(1) - ctrlHandle.PSP(1);
 
-if dedt > 0
-    % Look-up all of the gains for each one
-    kp = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.ExtGains.Kp,I_cur(1),I_cur(2)); 
 
-    kd = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.ExtGains.Kd,I_cur(1),I_cur(2)); 
 
-    ki = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.ExtGains.Ki,I_cur(1),I_cur(2));
-else
-        % Look-up all of the gains for each one
-    kp = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Kp,I_cur(1),I_cur(2)); 
-
-    kd = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Kd,I_cur(1),I_cur(2)); 
-
-    ki = interp2(ctrlHandle.xVal(:),ctrlHandle.yVal(:)...
-        ,ctrlHandle.RetGains.Ki,I_cur(1),I_cur(2));
-end
+kp = ctrlHandle.kp;
+kd = ctrlHandle.kd;
+ki = ctrlHandle.ki;
 
 % PID Control 
 dt               = cputime - ctrlHandle.T(1); % Delta Time Step
@@ -60,6 +44,11 @@ ctrlHandle.Contrib.I(1) = ki * ctrlHandle.IntE(1) * dt;
 % D Gain
 ctrlHandle.Contrib.D(1) = kd * dError * dt;
 
+% If gradient has changed reset errors
+if dedt ~= ctrlHandle.prevdedt
+    dError = 0;
+    ctrlHandle.IntE = 0;
+end
 
 if dt < 0.001
     dt = 0.001;
@@ -81,10 +70,23 @@ if ~isnan(ctrlHandle.Contrib.D)
     ctrlHandle.PID(1) = ctrlHandle.PID(1) - ctrlHandle.Contrib.D(1);
 end
 
+% Need to check to ensure that we actually only offset if we have something
+% to move.
+if dedt > 0
+    ctrlHandle.PID(1) = ctrlHandle.PID(1) + ctrlHandle.Offset(1);
+    if abs(ctrlHandle.MIN(1)) > abs(ctrlHandle.PID(1))
+        ctrlHandle.PID(1) = ctrlHandle.MIN(1);
+    end
+else
+    ctrlHandle.PID(1) = ctrlHandle.PID(1) - ctrlHandle.Offset(1);
+    if abs(ctrlHandle.MIN(1)) > abs(ctrlHandle.PID(1))
+        ctrlHandle.PID(1) = -ctrlHandle.MIN(1);
+    end
+end
 
-% Add the offset
-ctrlHandle.PID(1) = ctrlHandle.PID(1) + ...
-    sign(ctrlHandle.PID(1))*ctrlHandle.Offset(1);
+% % Add the offset
+% ctrlHandle.PID(1) = ctrlHandle.PID(1) + ...
+%     sign(ctrlHandle.PID(1))*ctrlHandle.Offset(1);
 % Need to limit the values to the maximum ram value;
 
 % Limit the boom ram
@@ -100,6 +102,8 @@ ctrlHandle.PSP(1) = ctrlHandle.SP(1);
 % Value to be returned
 returnValue = ctrlHandle.PID(1);
 
+% Set previous gradient to current gradient
+ctrlHandle.prevdedt = dedt;
 
 end
 

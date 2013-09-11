@@ -1,69 +1,3 @@
-<<<<<<< HEAD
-% Display some information that might be useful
-
-
-% %% Draw pictures of the body rotating and the location of the bucket;
-% % Make a rectangle Points
-% x        = [-1 1 1 -1 -1];
-% y        = [2 2 -2 -2 2];
-% % Rotate Points
-% xRot     = x*cos(rotAngle) - y*sin(rotAngle);
-% yRot     = x*sin(rotAngle) + y*cos(rotAngle);
-% 
-% delete(bodyH);
-% % Plot the Rotating Digger Frame
-% bodyH = subplot(1,2,2); plot(xRot, yRot, '-og'); axis equal
-% text(-4.5,-4.5, ['Theta = ' num2str(rotAngle)]);
-% axis([-5 5 -5 5]);
-
-
-% Plot Wanted position
-points = bucketLinkagePoints(H_cur,I_cur,J_cur,K_cur);
-set(h1,'XData',points(:,1),'YData',points(:,2));
-
-points = boomPoints(C_cur,D_cur,F_cur);
-set(h2,'XData',points(:,1),'YData',points(:,2));
-
-points = stickPoints(E_cur,F_cur,G_cur,H_cur,I_cur);
-set(h3,'XData',points(:,1),'YData',points(:,2));
-
-[a, b, c] = ramPoints(C_cur,D_cur,E_cur,G_cur,J_cur);
-col = '-or';
-set(h4,'XData',a(:,1),'YData',a(:,2));
-set(h5,'XData',b(:,1),'YData',b(:,2));
-set(h6,'XData',c(:,1),'YData',c(:,2));
-
-points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
-set(h7,'XData',points(:,1),'YData',points(:,2));
-
-% Plot the point to be found
-set(h8,'XData',find_pt(1),'YData',find_pt(2));
-
-if flag_b == 1
-    set(h9,'XData', -0.5, 'YData', 7.5);
-else
-    set(h9,'XData', 9, 'YData', 9);
-end
-
-if flag_s == 1
-    set(h10,'XData', 3.5, 'YData', 7.5);
-else
-    set(h10,'XData', 9, 'YData', 9);
-end
-
-if flag_bk == 1
-    set(h11,'XData', 7.5, 'YData', 7.5);
-else
-    set(h11,'XData', 9, 'YData', 9);
-end
-
-axis([-1 8 -5 8]);
-title('Current Digger');
-
-
-drawnow;
-=======
-
 clc;
 % Potting the digger image
 displayTimer   = displayTimer + 1;
@@ -71,8 +5,8 @@ displayTimer   = displayTimer + 1;
 if displayTimer > displayTimeOut
     col = [1 1 1];
     displayTimer = 0;
-    subplot(2,4,6:8);
-    [C_cur,D_cur,E_cur,F_cur,I_cur,H_cur,G_cur,J_cur,K_cur,~] = ...
+    subplot(2,4,7:8);
+    [C_cur,D_cur,E_cur,F_cur,I_cur,H_cur,G_cur,J_cur,K_cur,L_cur] = ...
         calcPositionFromAngles(ctheta1,ctheta2,ctheta3);
     points = bucketLinkagePoints(H_cur,I_cur,J_cur,K_cur);
     set(h1,'XData',points(:,1),'YData',points(:,2));
@@ -92,13 +26,30 @@ if displayTimer > displayTimeOut
     
     points = bucketPoints(ctheta3,(I_cur+K_cur)/2);
     set(h7,'XData',points(:,1),'YData',points(:,2));
-    L_cur = points(4,:);
     axis([-1 6 -2 6]);
     title('Digger','color',col);
     set(gca,'XColor',col);
     set(gca,'YColor',col);
     axis equal;
 
+    if ~record 
+        xVector = zeros(size(x));
+        yVector = zeros(size(x));
+    else
+        if Lpos
+            xVector(KK) = L_cur(1);
+            yVector(KK) = L_cur(2);
+        else
+            xVector(KK) = I_cur(1);
+            yVector(KK) = I_cur(2);
+        end
+    end
+    
+    if tmp ~= Lpos
+        xVector = zeros(size(x));
+        yVector = zeros(size(x));
+    end
+    tmp  = Lpos;
     
     
     
@@ -114,7 +65,7 @@ if displayTimer > displayTimeOut
     else
         title('I Point Tracking','color',col);
     end
-    axis([0 6.5 -1 4]);
+    axis([0 6.5 -1.5 4]);
     set(gca,'XColor',col);
     set(gca,'YColor',col);
     
@@ -134,8 +85,12 @@ if displayTimer > displayTimeOut
     set(gca,'XColor',col);
     set(gca,'YColor',col);
     
+  
+    
     subplot(2,4,5);
     plot(-10,-10);
+    
+
 
     axis off;
     yy  = 1;
@@ -145,6 +100,8 @@ if displayTimer > displayTimeOut
     text(xx,yy,['dZ      : ' num2str(dz)],'color',col);
     yy = yy - dyy;
     text(xx,yy,['dR      : ' num2str(dr)],'color',col);
+    yy = yy - dyy;
+    text(xx,yy,['dThe      : ' num2str(dthe)],'color',col);
     yy = yy - dyy;
     text(xx,yy,['Hz      : ' num2str(1/TT)],'color',col);
     yy = yy - dyy;
@@ -158,16 +115,8 @@ if displayTimer > displayTimeOut
     yy = yy - dyy;
     text(xx,yy,['Record  : ' num2str(record)],'color',col);
     yy = yy - dyy;
-    ppp = stickPID;
-    a = ppp.PID(1);
-    t1 = ppp.Contrib.P(1);
-    t2 = ppp.Contrib.I(1);
-    t3 = ppp.Contrib.D(1);
-    
-   
-    text(xx,yy,['Contrib (P,I,D)  : ' num2str(t1) ',' num2str(t2) ',' num2str(t3) ','],'color',col);
+    text(xx,yy,['Positions  : [' num2str(I_cur(1)) ',' num2str(I_cur(2)) ']'],'color',col);
     yy = yy - dyy;
-    
     axis([-1 1 yy 1]);
     
     drawnow;
@@ -211,7 +160,6 @@ disp(['Testing : ' num2str(testing)]);
 
 disp(['Record : ' num2str(record)]);
 
->>>>>>> origin/TL-Tetsing
 
 
 

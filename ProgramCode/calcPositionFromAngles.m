@@ -12,7 +12,7 @@ FE = 0.6844;
 EI = 3.1398;
 KI = 0.4014;
 HI = 0.3739;
-IL = 2.7988; 
+IL = 0.95; 
 JK = 0.5144;
 EG = 0.9568;
 HJ = 0.5457;
@@ -70,8 +70,8 @@ K(1) = I(1) + KI*cosd(theta3);
 K(2) = I(2) + KI*sind(theta3);
 
 % L Point
-L(1) = I(1) + IL*cosd(90-theta3);
-L(2) = I(2) + IL*sind(90-theta3);
+L(1) = I(1) + IL*cosd(theta3 - 75);
+L(2) = I(2) + IL*sind(theta3 - 75);
 
 % J Point
 J = calcIntersectionPoint2(H,K,JK,HJ);
