@@ -3,9 +3,13 @@ function [ ctrlHandle ] = createCtrlHandle( filenameExt,filenameRet, minE, maxE,
 
 ctrlHandle = struct();
 
-ctrlHandle.kp = 0;
-ctrlHandle.kd = 0;
-ctrlHandle.ki = 0;
+ctrlHandle.RGains.kp = 0;
+ctrlHandle.RGains.kd = 0;
+ctrlHandle.RGains.ki = 0;
+
+ctrlHandle.EGains.kp = 0;
+ctrlHandle.EGains.kd = 0;
+ctrlHandle.EGains.ki = 0;
 
 ctrlHandle.prevdedt = 0;
 

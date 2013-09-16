@@ -9,11 +9,16 @@ function [ ctrlHandle, returnValue ] = calcPID( ctrlHandle, I_cur )
 % Check to see if we use Extend/Retract gains
 dedt = ctrlHandle.SP(1) - ctrlHandle.PSP(1);
 
-
-
-kp = ctrlHandle.kp;
-kd = ctrlHandle.kd;
-ki = ctrlHandle.ki;
+if dedt > 0
+    kp = ctrlHandle.RGains.kp;
+    kd = ctrlHandle.RGains.kd;
+    ki = ctrlHandle.RGains.ki;
+else
+    kp = ctrlHandle.EGains.kp;
+    kd = ctrlHandle.EGains.kd;
+    ki = ctrlHandle.EGains.ki;
+end
+    
 
 % PID Control 
 dt               = cputime - ctrlHandle.T(1); % Delta Time Step
@@ -42,7 +47,7 @@ ctrlHandle.Contrib.P(1) = kp * ctrlHandle.CE(1);
 ctrlHandle.Contrib.I(1) = ki * ctrlHandle.IntE(1) * dt;
 
 % D Gain
-ctrlHandle.Contrib.D(1) = kd * dError * dt;
+ctrlHandle.Contrib.D(1) = kd * dError / dt;
 
 % If gradient has changed reset errors
 if dedt ~= ctrlHandle.prevdedt

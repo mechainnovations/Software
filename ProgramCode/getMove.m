@@ -17,15 +17,42 @@ slew = 0;
 % Value axis must be above to move.
 val = 0.15;
 
-[axes1, buttons] = read(joyID); % Read controller inputs
+if length(joyID) <= 1
+    [axes1, buttons] = read(joyID(1)); % Read controller inputs
+else
+    [axes1, buttons1] = read(joyID(1));
+    [axes2, buttons2] = read(joyID(2));
+end
+    
+
+if strcmp(type,'original')
+    % Configurable numbers for different Joystick setups.
+    boAxis = 2; maxMoveBo = 0.5;
+    buAxis = 1; maxMoveBu = -0.5;
+    stAxis = 2; maxMoveSt = -0.5;
+    %slewAxis = 3; maxMoveSlew = 250;
+    % Calculate the New Steps
+    if abs(axes2(buAxis)) > val
+        theta   = axes2(buAxis) * maxMoveBu;
+    end
+    
+    if abs(axes2(boAxis)) > val
+        zheight  = axes2(boAxis) * maxMoveBo;
+    end
+    
+    tmp = axes1(stAxis)+0.5;
+    if abs(tmp) > val
+        radius = (tmp) * maxMoveSt;
+    end
+end
 
 % Xbox Controller
 if strcmp(type,'xbox')
     
     % Configurable numbers for different Joystick setups.
     tAxis = 3; maxMoveT = 0.5;
-    rAxis = 2; maxMoveR = -0.005;
-    zAxis = 5; maxMoveZ = -0.005;
+    rAxis = 2; maxMoveR = -0.004;
+    zAxis = 5; maxMoveZ = -0.004;
     %slewAxis = 3; maxMoveSlew = 250;
 
     % Calculate the New Steps

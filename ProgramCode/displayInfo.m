@@ -65,7 +65,7 @@ if displayTimer > displayTimeOut
     else
         title('I Point Tracking','color',col);
     end
-    axis([0 6.5 -1.5 4]);
+    axis([0 8 -1.5 4]);
     set(gca,'XColor',col);
     set(gca,'YColor',col);
     

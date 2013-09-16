@@ -1,7 +1,24 @@
+function[] = main()
+
 clc            ;
 clear variables;
 close all      ;
 
+%% Setup the file saving system
+data_structure = selection_gui(); 
+MMMM = 1; % Timing variable for the test
+Lpos = data_structure.Lpos;
+record = data_structure.record;
+original = data_structure.original;
+testing = original;
+
+if original
+    controllerString = 'original';
+else
+    controllerString = 'xbox';
+end
+
+startTimeData = cputime;
 %% RANDOM PLOTTING NONSENSE TO BE TAKEN OUT
 KK = 1;
 x  = 1 : 250*4;
@@ -23,11 +40,11 @@ curPointGJVect = zeros(1,length(x));
 
 
 %% Initialisation Functions
-initCAN();             % CAN Initilisation
-[joyID] = initJOY();   % Joystick Initilisation
-initVARS();            % Certain Variables needed within code
-initDISP();            % Setup figure handles for the GUI
-initPID ();            % Initialise the PID handlers
+initCAN();                       % CAN Initilisation
+initVARS();                      % Certain Variables needed within code
+[joyID, testing] = initJOY(1);   % Joystick Initilisation
+initDISP();                      % Setup figure handles for the GUI
+initPID ();                      % Initialise the PID handlers
 
 % Testing Code Set simulator to this value
 ctheta1 = 65;
@@ -79,7 +96,8 @@ while 1
     
     
     % New coding for matrix operations
-    [dthe, dr, dz, dslew, Lpos, record, testing] = getMove(joyID,Lpos,record,testing,'spacemouse');
+    [dthe, dr, dz, dslew, Lpos, record, testing] = ...
+        getMove(joyID,Lpos,record,testing,controllerString);
     
     % Set a STOP flag to know we need to stop
     % The position we want to move to is the previous position we wanted to
@@ -151,8 +169,8 @@ while 1
             bucketPID.CE = 0;
         end
     else
-        boomRam  = sign(-dz)*190 + 40/.005 * -dz;
-        stickRam = 250000 * -dr;
+        boomRam  = sign(-dz)*190 + 40/.5 * -dz;
+        stickRam = sign(-dr)*190 + 60/.5 * -dr;
     end
     
     if abs(dthe) > 0.2
@@ -222,6 +240,28 @@ while 1
         curPointBCVect ( KK+1: KK + 10 ) = value;
         curPointDEVect ( KK+1: KK + 10 ) = value;
     end
+    
+    % Data saving Construct
+    data_structure.t(MMMM) = cputime - startTimeData;
+    data_structure.x(MMMM) = xVector( KKK );
+    data_structure.y(MMMM) = yVector( KKK );
+    data_structure.boomRam(MMMM) = boomK   ( KK );
+    data_structure.sticRam(MMMM) = stickK   ( KK );
+    data_structure.buckRam(MMMM) = bucketK   ( KK );
+    MMMM = MMMM + 1;
+    finish = onCleanup(@() exitProgram(data_structure));
+end
+
 end
 
 
+function[] = exitProgram(data_structure)
+    time = clock;
+    year = num2str(time(1));
+    month = num2str(time(2));
+    day = num2str(time(3));
+    hour = num2str(time(4));
+    minute = num2str(time(5));
+    str = [year '.' month '.' day '-' hour '.' minute '-' data_structure.usercode];
+    save([str '.mat'],'-struct','data_structure')
+end
