@@ -1,7 +1,7 @@
 % Initialise the PID Handlers
 
-boomPID  = createCtrlHandle('boomGainsExt.xlsx','boomGainsRet.xlsx',180, 220,1,185);
-stickPID = createCtrlHandle('stickGainsExt.xlsx','stickGainsRet.xlsx',205, 240,1,220);
+boomPID  = createCtrlHandle('boomGainsExt.xlsx','boomGainsRet.xlsx',170, 220,1,185);
+stickPID = createCtrlHandle('stickGainsExt.xlsx','stickGainsRet.xlsx',190, 240,1,220);
 bucketPID = createCtrlHandle('stickGainsExt.xlsx','stickGainsRet.xlsx',190, 250,1,200);
 
 bucketPID.kp = 0.9; 

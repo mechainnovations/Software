@@ -1,8 +1,4 @@
-function[] = main()
-
-clc            ;
-clear variables;
-close all      ;
+function[] = main(canChan)
 
 %% Setup the file saving system
 data_structure = selection_gui(); 
@@ -40,9 +36,9 @@ curPointGJVect = zeros(1,length(x));
 
 
 %% Initialisation Functions
-initCAN();                       % CAN Initilisation
+                       % CAN Initilisation
 initVARS();                      % Certain Variables needed within code
-[joyID, testing] = initJOY(1);   % Joystick Initilisation
+[joyID] = initJOY(original);   % Joystick Initilisation
 initDISP();                      % Setup figure handles for the GUI
 initPID ();                      % Initialise the PID handlers
 
@@ -98,7 +94,10 @@ while 1
     % New coding for matrix operations
     [dthe, dr, dz, dslew, Lpos, record, testing] = ...
         getMove(joyID,Lpos,record,testing,controllerString);
-    
+    if abs(dthe) > 0.2
+        dr = 0;
+        dz = 0;
+    end
     % Set a STOP flag to know we need to stop
     % The position we want to move to is the previous position we wanted to
     % be in plus the joystick. If joystick is released then stop
@@ -169,8 +168,8 @@ while 1
             bucketPID.CE = 0;
         end
     else
-        boomRam  = sign(-dz)*190 + 40/.5 * -dz;
-        stickRam = sign(-dr)*190 + 60/.5 * -dr;
+        boomRam  = sign(-dz)*190 + 25/.5 * -dz;
+        stickRam = sign(-dr)*200 + 40/.5 * -dr;
     end
     
     if abs(dthe) > 0.2
@@ -243,8 +242,8 @@ while 1
     
     % Data saving Construct
     data_structure.t(MMMM) = cputime - startTimeData;
-    data_structure.x(MMMM) = xVector( KKK );
-    data_structure.y(MMMM) = yVector( KKK );
+    data_structure.x(MMMM) = xVector( KK );
+    data_structure.y(MMMM) = yVector( KK );
     data_structure.boomRam(MMMM) = boomK   ( KK );
     data_structure.sticRam(MMMM) = stickK   ( KK );
     data_structure.buckRam(MMMM) = bucketK   ( KK );
@@ -262,6 +261,8 @@ function[] = exitProgram(data_structure)
     day = num2str(time(3));
     hour = num2str(time(4));
     minute = num2str(time(5));
-    str = [year '.' month '.' day '-' hour '.' minute '-' data_structure.usercode];
+    second = num2str(time(6));
+    
+    str = [year '.' month '.' day '-' data_structure.usercode];
     save([str '.mat'],'-struct','data_structure')
 end

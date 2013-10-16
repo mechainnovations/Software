@@ -3,7 +3,7 @@ function [ joyID ] = initJOY( original )
 
 joyID(1) = vrjoystick(1);
 testing = 0;
-if original
+if original == 1
     joyID(2) = vrjoystick(2);
 end
 

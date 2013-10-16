@@ -26,9 +26,10 @@ end
     
 
 if strcmp(type,'original')
+    val = 0.3;
     % Configurable numbers for different Joystick setups.
-    boAxis = 2; maxMoveBo = 0.5;
-    buAxis = 1; maxMoveBu = -0.5;
+    boAxis = 2; maxMoveBo = -0.5;
+    buAxis = 1; maxMoveBu = 0.5;
     stAxis = 2; maxMoveSt = -0.5;
     %slewAxis = 3; maxMoveSlew = 250;
     % Calculate the New Steps
@@ -40,7 +41,7 @@ if strcmp(type,'original')
         zheight  = axes2(boAxis) * maxMoveBo;
     end
     
-    tmp = axes1(stAxis)+0.5;
+    tmp = axes1(stAxis);
     if abs(tmp) > val
         radius = (tmp) * maxMoveSt;
     end

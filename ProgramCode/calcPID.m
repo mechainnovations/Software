@@ -19,13 +19,12 @@ else
     ki = ctrlHandle.EGains.ki;
 end
     
-
 % PID Control 
 dt               = cputime - ctrlHandle.T(1); % Delta Time Step
 ctrlHandle.T(1)  = cputime;
 
 % Error
-ctrlHandle.CE(1)     = ctrlHandle.SP(1)    - ctrlHandle.CV(1);
+ctrlHandle.CE(1)     = (ctrlHandle.SP(1)    - ctrlHandle.CV(1));
 
 ctrlHandle.IntE(1)   = ctrlHandle.IntE(1)  + ctrlHandle.CE(1) ;
 
